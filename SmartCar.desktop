@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Icon=/home/user/wsn/smartcar/image/umki_logo_m.png
+Exec=sh -c 'cd /home/user/wsn/smartcar  && ./smartcar -b'
+Name=Snap4Arduino
+Name[ru_RU]=SmartCar
+GenericName[ru_RU.UTF-8]=Смарткар
+Comment[ru_RU.UTF-8]=Car

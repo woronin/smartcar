@@ -1,0 +1,13 @@
+INPUT(
+./release\channel.o
+./release\formview.o
+./release\formzastav.o
+./release\main.o
+./release\vench.o
+./release\formhlp.o
+./release\moc_formview.o
+./release\moc_formzastav.o
+./release\moc_vench.o
+./release\moc_formhlp.o
+./release\qrc_res.o
+);

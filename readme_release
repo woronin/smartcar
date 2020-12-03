@@ -1,0 +1,116 @@
+6_11_2011
+Seichas programma meraet osveshennost 
+Dla izmerenia nado zaprosit komandoy dla temperaturi, sozdatsa fail s indexom o 
+osveshennost ne kalibrovana
+
+14_11_2011
+Dla zaprosa zadimlennosti nado dati komandu s nomerom 6
+
+
+10_01_12
+sdelano upravlenie kardiografom
+nado dodelat priem daniih po rs-kanalu & rashifrovku
+
+
+23_02 12
+Peredelan priem kodogrammi dla neposredstvennogo otpravlenia v rs
+dobavlen podschet kontr summ
+
+29_06_12 
+pri ukazanii komandi * ubran priznak konca komandi - 0xff 0xff inache nelza otpravit shirokovesha komandu!
+
+14_07_13
+Mashinka moget upravlatsa s klaviatury
+w - vpered
+s - nazad
+a - vlevo
+d - vpravo
+m - razbudit
+p – play program
+r – rec program
+l – lampochka
+b – bip
+
+ubrana knopka uskorenie (visible == false)
+teper vpravo && vlevo vsegda uskoreno (inache visnet diskretnoe)
+ubran checkbox oldVersion (visible==false)
+
+
+29_10_13 (novie kommandi upravlenia dviganiem :vpered nazad vlevo vpravo extrvlevo extrvpravo)
+    esli ob'yvlen makros OLDD - staraya versia
+    esli net to novay
+    
+30_10_13 ispravleno upravlenie masinkoi po programme (kumir ili obichnoy) - chtobi uchitivalos chislo imp dla kagdoy mashinki
+
+﻿ispolsuem file COM_F.txt dla peredachi komand serveru
+
+komanda dolgna nachinatsa simvolom * ili & 
+
+
+esli mac-adres==0 to komanda posilaetsa shirokovesh
+
+esli komanda nachinaetsa so * - to dalee dolgni idti dannie neposredstvenno 
+    dla peredachi v port ustroistvu napramiu
+    
+esli komanda nachinaetsa s simvola & to dalee dolgen idti nomer komandi is spiska:
+    0 - obnovit file ACTIVE_LOG.tst - obnovlaer file s activnimi ustroistvami
+    primer : & 0 ff ff
+
+    0 1  - obnovit file ACTIVE_LOG.tst && data in program - obnovlaer file s activnimi ustroistvami
+    primer : & 0 1 ff ff
+    
+    1 - zaprosit u vseh act ust temp vtoroi paramert period v sec esli =0 to odin raz
+    primer : & 1 10 ff ff
+    
+    2 - zaprosit u vseh act energ    vtoroi paramert period v sec esli =0 to odin raz
+    primer : & 2 15 ff ff 
+    
+    3 - zaprosit temp kontretnogo ustr-va (neobhodimo ukazat mac-adres s 3 parametra, 2 - period oprosa)
+    primer : & 3 10 0 13 A2 0 40 5C EB D6 FF FF
+    
+    4 - zaprosit energ kontretnogo ustr-va (neobhodimo ukazat mac-adres s 3 parametra, 2 - period oprosa)
+    primer : & 4 15 0 13 A2 0 40 5C EB D6 FF FF
+
+    5 - usipit ustroistvo 2-i parametr vrema sna v sec
+    primer : & 5 0.5 0 13 A2 0 40 5C EB D6 FF FF
+
+    6 - zaprosit zadimlennost
+    primer : & 6 10 0 13 A2 0 40 5C EB D6 FF FF
+
+    7 - 
+
+    8 - poluchit kodogr ot kardiografa
+
+    9 - tekhnolog
+    
+    a - start drive
+    d - stop drive
+    b - send comm    
+    primer : & b 2 49 53 0 13 A2 0 40 5C EB D6 FF FF
+
+    
+    c - start algoritm usiplenia
+    pervii parametr - vrema sna poslednego, vtoroi zadergka megdu dvuma
+
+
+Mogno davat comandu v vide slov poka tolko sleduyshie:
+quit - ostanov programm vihod
+log - pechatat log file
+ulog - ne pechata log file
+
+
+File s tarirovochnimi koeff-mi dolgen nazivatsa T_KOEFF.txt 
+format zadania koeff-v sleduyushii: 
+    & 3.1 0 13 A2 0 40 5C EB D6    
+(znak &, zatem     koeff, zatem mac-adres)
+po umolchaniy koeff dla vseh ustroistv = 2
+
+
+
+18_06_17
+подключаем еще одно устройство кроме zigbee, которое работает по bluetooth
+
+
+15 04 18
+реализован запуск программы с ключом -f "snap.xml" , во втором параметре имя файла который должен выполняться при запуске программы,
+программа выполняется в консольном режиме и завершается после выполнения

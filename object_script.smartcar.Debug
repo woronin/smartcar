@@ -1,0 +1,13 @@
+INPUT(
+./debug\channel.o
+./debug\formview.o
+./debug\formzastav.o
+./debug\main.o
+./debug\vench.o
+./debug\formhlp.o
+./debug\moc_formview.o
+./debug\moc_formzastav.o
+./debug\moc_vench.o
+./debug\moc_formhlp.o
+./debug\qrc_res.o
+);

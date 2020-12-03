@@ -1,0 +1,17 @@
+1 stroka - katalog gde hranit file ACTIVE_LOG - primer: /home/user/Veg_qt4_23_06_13/Vehicle
+
+2 stroka - name file for kumir -primer: ulitka2_cikl.kum
+
+3 stroka - name file forxml -primer: program.xml
+
+4 stroka - kol-vo impulsov dla programm mashinki
+
+5 stroka - 18
+
+6 stroka - name port rs232 - prmer: /dev/ttyUSB0
+
+7 stroka - vrema zadergki posle komandi - primer: 100
+
+8 stroka - kolichestvo implsov dla diskretnogo dvigenia - primer: 10
+
+9 stroka - nazvanie com-porta dla windows

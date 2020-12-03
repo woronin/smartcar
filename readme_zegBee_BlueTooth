@@ -1,0 +1,3 @@
+zapuskat sleduyshim obazom:
+./smartcar, ./smartcar -z , (pervii parametr lyboy - zeggBee)
+./smartcar -b  (budet primenatsa protokol bluetooth)

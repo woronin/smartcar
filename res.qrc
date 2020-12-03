@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>image/umki_logo.png</file>
+        <file>image/umki_logo_m.png</file>
+        <file>image/umki_logo_s.png</file>
+    </qresource>
+</RCC>
