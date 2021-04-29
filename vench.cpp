@@ -108,6 +108,7 @@
 #include <QDateTime>
 #include <QTimer>
 #include <QEventLoop>
+#include <QStringList>
 
 #include <vench.h>
 
@@ -190,6 +191,7 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
 
     flBlueTooth =fBT;
 
+    fl_altlin=0;
 
 #ifdef WIN_D
     QTextCodec::setCodecForTr(QTextCodec::codecForName ("Windows-1251"));
@@ -916,6 +918,20 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
     plm.setColor(QPalette::Base,Qt::white);
     this->setPalette(plm);
 
+
+
+//20210426 proveraem altlinux ili net
+	bool fla =  QFile::exists("/etc/altlinux-release");
+//	bool fla =  QFile::exists("smartcar1");
+	if ( fla== true)	{ 
+	    fl_altlin=1;
+	    qDebug(" OS - AltLinux!!!\n");
+	}
+	else {
+	    fl_altlin=0;
+	    qDebug(" OS - NO AltLinux!!!\n");
+
+	}
     }
 
 //void Vench::qDebug_d(const char* format,...){
@@ -10011,6 +10027,45 @@ qDebug()<<t;
         qDebug()<<fileHlp;
     #endif
 
+
+//////20210426 chtenie file brouser
+
+    t= tt.readLine();
+    i=0;
+#ifdef PRINT_DEBUG
+
+//qDebug("EEE");
+//qDebug()<<t;
+#endif
+    while ((t=="")||(t.indexOf("#")==0)){
+      t= tt.readLine();
+      i++;
+      if (i>NUM_STROK) {
+    #ifdef PRINT_DEBUG
+          qDebug("Error read ini-file % \n");
+    #endif
+          return;
+      }
+        mSleep(5);
+    }
+    #ifdef PRINT_DEBUG
+
+    qDebug()<<t;
+    #endif
+
+    #ifdef LINUX_D
+//    fileHlp = "/.config/smartcar/"+t;//ima file HLP;
+    fileBrs = t;//ima file HLP;
+    #endif
+    #ifdef WIN_D
+//        fileBrs +="\\"+ t;//ima file HLP;  put ugezadan ranee
+    #endif
+
+    #ifdef PRINT_DEBUG
+
+        qDebug()<<fileBrs;
+    #endif
+
     fl_com.close();
 }
 
@@ -16836,18 +16891,81 @@ void Vench::on_pushButton_3_clicked()
 {
 #ifdef LINUX_D
 
-   QString     ms = "firefox ";// + tt + " &";
+
+//   QString     ms = "firefox ";// + tt + " &";
+//20210426  berem ima brousera iz ini-file
+	QProcess verStream;
+
+	QString     ms = fileBrs;
+    
+        ms=ms+" ";
+	
+
+//fl_altlin=1;
+    if (fl_altlin==0){//20210426 lubaya oper system krome altlinux
        QString tt;
        tt= ServerDir->text();
        tt =tt+ fileHlp;
-       ms = ms+tt + " &";
+	ms = ms+tt;
 
+	
    qDebug()<<ms;
-    QByteArray rr = ms.toLocal8Bit();
 
-    rr = ms.toLocal8Bit();
-    int i = system(rr);
-    i=i+1;
+        QByteArray rr = ms.toLocal8Bit();
+
+        rr = ms.toLocal8Bit();
+
+
+//    	verStream.start(rr);
+    	verStream.start(ms);
+	verStream.waitForFinished();
+	QString err = verStream.readAllStandardOutput();
+	
+//qDebug()<<err;
+    
+//20210426	int i = system(rr);
+//20210426        i=i+1;
+    }
+    else{// 20210426 altlinux
+
+	QString commands("rpm -q --queryformat \"%{VERSION}\" smartcar");    
+//	QString commands("ls");    
+
+        QByteArray rr = commands.toLocal8Bit();
+
+	printf("commands\n");
+	printf("%s \n", rr.constData());
+
+    	verStream.start(commands);
+//	verStream.waitForFinished(2000);
+	verStream.waitForFinished();
+	QString verS = verStream.readAllStandardOutput();
+
+         rr = verS.toLocal8Bit();
+
+	printf("Nomer Versii\n");
+	printf("%s \n", rr.constData());
+
+
+	QString pf("/usr/share/doc/smartcar-");
+
+	pf = pf+verS;
+	pf = pf+"/"+fileHlp;
+
+	ms =ms+pf;
+    	verStream.start(ms);
+	verStream.waitForFinished();
+
+	//qDebug("Nomer Versii");
+	//qDebug() << verS;
+	//qDebug("File help");
+	//qDebug() << pf;
+
+	
+	rr = pf.toLocal8Bit();
+	printf("File help\n");
+	printf("%s \n", rr.constData());
+    }
 
 #endif
 

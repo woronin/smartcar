@@ -12,7 +12,7 @@
 int main( int argc, char ** argv )
 {
     
-    qDebug("Version 20201119\n");
+    qDebug("Version 20210428\n");
 //    printf("start program\n");
     QApplication a( argc, argv );
 //    Vench *w = new Vench(0,0,0,0x00000200);
