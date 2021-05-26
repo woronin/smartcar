@@ -205,6 +205,8 @@ public:
 
 
     QString fileHlp;
+    QString fileBrs;// 20210426 for brouser
+    int fl_altlin;//20210426 flag togo chto mi rabotaem v alt linux
 
     QString progrPostrGRPH;
     QString progrShowGRPH;

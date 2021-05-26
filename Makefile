@@ -16,7 +16,7 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 INCPATH       = -I. -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtNetwork -isystem /usr/include/qt5/QtXml -isystem /usr/include/qt5/QtCore -I. -I. -I/usr/lib64/qt5/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake-qt5
 DEL_FILE      = rm -f
@@ -129,6 +129,7 @@ DIST          = /usr/lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib64/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib64/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib64/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib64/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib64/qt5/mkspecs/features/default_pre.prf \
@@ -225,6 +226,7 @@ Makefile: smartcar.pro /usr/lib64/qt5/mkspecs/linux-g++/qmake.conf /usr/lib64/qt
 		/usr/lib64/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib64/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib64/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib64/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib64/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib64/qt5/mkspecs/features/default_pre.prf \
@@ -302,6 +304,7 @@ Makefile: smartcar.pro /usr/lib64/qt5/mkspecs/linux-g++/qmake.conf /usr/lib64/qt
 /usr/lib64/qt5/mkspecs/features/qt_config.prf:
 /usr/lib64/qt5/mkspecs/linux-g++/qmake.conf:
 /usr/lib64/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib64/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib64/qt5/mkspecs/features/toolchain.prf:
 /usr/lib64/qt5/mkspecs/features/default_pre.prf:
@@ -378,7 +381,7 @@ compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: /usr/lib64/qt5/mkspecs/features/data/dummy.cpp
-	g++ -pipe -O2 -Wall -W -dM -E -o moc_predefs.h /usr/lib64/qt5/mkspecs/features/data/dummy.cpp
+	g++ -pipe -O2 -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/lib64/qt5/mkspecs/features/data/dummy.cpp
 
 compiler_moc_header_make_all: moc_formview.cpp moc_formzastav.cpp moc_vench.cpp moc_formhlp.cpp
 compiler_moc_header_clean:
@@ -386,12 +389,12 @@ compiler_moc_header_clean:
 moc_formview.cpp: formview.h \
 		moc_predefs.h \
 		/usr/share/qt5/bin/moc
-	/usr/share/qt5/bin/moc $(DEFINES) --include /home/user/wsn/smartcar_noqwt/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/user/wsn/smartcar_noqwt -I/home/user/wsn/smartcar_noqwt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtXml -I/usr/include/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/c++/8/x86_64-alt-linux -I/usr/include/c++/8/backward -I/usr/lib64/gcc/x86_64-alt-linux/8/include -I/usr/local/include -I/usr/include formview.h -o moc_formview.cpp
+	/usr/share/qt5/bin/moc $(DEFINES) --include /home/user/wsn/smartcar_noqwt/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/user/wsn/smartcar_noqwt -I/home/user/wsn/smartcar_noqwt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtXml -I/usr/include/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/c++/5/x86_64-alt-linux -I/usr/include/c++/5/backward -I/usr/lib64/gcc/x86_64-alt-linux/5/include -I/usr/local/include -I/usr/include formview.h -o moc_formview.cpp
 
 moc_formzastav.cpp: formzastav.h \
 		moc_predefs.h \
 		/usr/share/qt5/bin/moc
-	/usr/share/qt5/bin/moc $(DEFINES) --include /home/user/wsn/smartcar_noqwt/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/user/wsn/smartcar_noqwt -I/home/user/wsn/smartcar_noqwt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtXml -I/usr/include/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/c++/8/x86_64-alt-linux -I/usr/include/c++/8/backward -I/usr/lib64/gcc/x86_64-alt-linux/8/include -I/usr/local/include -I/usr/include formzastav.h -o moc_formzastav.cpp
+	/usr/share/qt5/bin/moc $(DEFINES) --include /home/user/wsn/smartcar_noqwt/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/user/wsn/smartcar_noqwt -I/home/user/wsn/smartcar_noqwt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtXml -I/usr/include/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/c++/5/x86_64-alt-linux -I/usr/include/c++/5/backward -I/usr/lib64/gcc/x86_64-alt-linux/5/include -I/usr/local/include -I/usr/include formzastav.h -o moc_formzastav.cpp
 
 moc_vench.cpp: vench.h \
 		define.h \
@@ -401,12 +404,12 @@ moc_vench.cpp: vench.h \
 		formview.h \
 		moc_predefs.h \
 		/usr/share/qt5/bin/moc
-	/usr/share/qt5/bin/moc $(DEFINES) --include /home/user/wsn/smartcar_noqwt/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/user/wsn/smartcar_noqwt -I/home/user/wsn/smartcar_noqwt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtXml -I/usr/include/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/c++/8/x86_64-alt-linux -I/usr/include/c++/8/backward -I/usr/lib64/gcc/x86_64-alt-linux/8/include -I/usr/local/include -I/usr/include vench.h -o moc_vench.cpp
+	/usr/share/qt5/bin/moc $(DEFINES) --include /home/user/wsn/smartcar_noqwt/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/user/wsn/smartcar_noqwt -I/home/user/wsn/smartcar_noqwt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtXml -I/usr/include/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/c++/5/x86_64-alt-linux -I/usr/include/c++/5/backward -I/usr/lib64/gcc/x86_64-alt-linux/5/include -I/usr/local/include -I/usr/include vench.h -o moc_vench.cpp
 
 moc_formhlp.cpp: formhlp.h \
 		moc_predefs.h \
 		/usr/share/qt5/bin/moc
-	/usr/share/qt5/bin/moc $(DEFINES) --include /home/user/wsn/smartcar_noqwt/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/user/wsn/smartcar_noqwt -I/home/user/wsn/smartcar_noqwt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtXml -I/usr/include/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/c++/8/x86_64-alt-linux -I/usr/include/c++/8/backward -I/usr/lib64/gcc/x86_64-alt-linux/8/include -I/usr/local/include -I/usr/include formhlp.h -o moc_formhlp.cpp
+	/usr/share/qt5/bin/moc $(DEFINES) --include /home/user/wsn/smartcar_noqwt/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/user/wsn/smartcar_noqwt -I/home/user/wsn/smartcar_noqwt -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtXml -I/usr/include/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/c++/5/x86_64-alt-linux -I/usr/include/c++/5/backward -I/usr/lib64/gcc/x86_64-alt-linux/5/include -I/usr/local/include -I/usr/include formhlp.h -o moc_formhlp.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
