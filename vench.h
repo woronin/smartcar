@@ -330,10 +330,10 @@ public:
 
 
 #ifdef WIN_D
-    DCB dcb;                                // ��������� �������� ��������� ����������������� �����
-    COMMTIMEOUTS rCommTimeouts;             // ��������� ��������� ����������
+    DCB dcb;
+    COMMTIMEOUTS rCommTimeouts;
     HANDLE hCOM;
-    OVERLAPPED overlapped; //����� ������������ ��� �������� ������ (��. ����� ReadThread)
+    OVERLAPPED overlapped; // (ReadThread)
     OVERLAPPED overlappedwr;
 
 #endif

@@ -71,7 +71,7 @@ FormView::FormView( QWidget* parent)
     TextLabel = new QLabel( trUtf8(""),this );
     TextLabel->setGeometry( QRect( 20, 20, 275, 30 ) );
     
-    TextLabel1 = new QLabel( trUtf8("мак-АД� ЕС"),this );
+    TextLabel1 = new QLabel( trUtf8("мак-адрес"),this );
     TextLabel1->setGeometry( QRect( 20, 55, 275, 40 ) );
 
 //chtobi pravilno perehodil Tab-m

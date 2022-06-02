@@ -41,26 +41,26 @@ FormZastav::FormZastav( QWidget* parent, char * kat)
 
     QPixmap zs;
     QString ktl(kat);
-    
+
     if (ktl=="") {
 #ifdef LINUX_D
 	ktl = "/usr/share/smartcar/";
-	
+
         ktl =ktl + "umki_logo.png";
         QFile mfl(ktl);
-	
+
         if (!mfl.exists()){
-	
+
             ktl ="umki_logo.png";
         }
 #endif
 #ifdef WIN_D
             ktl ="umki_logo.png";
-#endif        
-	
+#endif
+
     }else    {
 	ktl = ktl+"umki_logo.png";
-	
+
     }
 //    qDebug()<<ktl;
 //20201119    zs.load(ktl);
@@ -71,7 +71,7 @@ zs.load(":image/image/umki_logo.png");
     TextLabel->setGeometry( QRect( 0, 0, 600, 340 ) );
     TextLabel->setPixmap(zs);
 
-    TextLabel1 = new QLabel( tr("            Õ ¿ ∆ Ã » “ ≈             À ﬁ ¡ ” ﬁ            À ¿ ¬ » ÿ ”"),this );
+    TextLabel1 = new QLabel( tr("            –ù –ê –ñ –ú –ò –¢ –ï             –õ –Æ –ë –£ –Æ          –ö –õ –ê –í –ò –® –£"),this );
     TextLabel1->setGeometry( QRect( 100, 0, 600, 710 ) );
 
     languageChange();
@@ -105,8 +105,8 @@ void FormZastav::languageChange()
 {
 //    setCaption( tr( "FormZastav" ) );
 
-    setWindowTitle( trUtf8( "–ü—É–ª—å—Ç –£–ú– –ò" ) );
-//    TextLabel1->setText( tr( "Õ‡ÊÏËÚÂ Î˛·Û˛ ÍÎ‡‚Ë¯Ûò" ) );
+    setWindowTitle( trUtf8( "–ü—É–ª—å—Ç –£–ú–ö–ò" ) );
+//    TextLabel1->setText( tr( "–ù–∞–∂–º–∏—Ç–µ –ª—é–±—É—é –∫–ª–∞–≤–∏—à—É" ) );
 }
 
 
@@ -124,7 +124,7 @@ void FormZastav::destroy()
  //delete PixmapLabel;
 }
 
-    
+
 
 ///void FormZastav::mousePressEvent(  )
 //{
