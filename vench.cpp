@@ -87,7 +87,7 @@
 #include <sys/types.h>
 #include <string.h>
 #include <unistd.h>
-
+#include <QMessageBox>
 
 
 //end for rs
@@ -782,8 +782,6 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
     }
     
     init();
-
-
 
 
 
@@ -1590,14 +1588,13 @@ void Vench::ProcessTimer()
 
 
 
-//20210429
-                 listV->addItem(txt);
 
+                 listV->addItem(txt);
                  ui->listV->addItem(txt);
                  ui->listV_n->addItem(txt);
 
 
-///for neww regim prostoy
+///for new regim prostoy
                  if (i==0){
                      ui->BCar_1->setEnabled( true);
                  }
@@ -3137,7 +3134,7 @@ void Vench::BPressRight()
 
 void Vench::BPressLeft()
 {
-    
+
 
     SbrosDatKas();
     if(fl_play)return;
@@ -3961,12 +3958,6 @@ void Vench::keyPressEvent( QKeyEvent *e )
 	
 	
     case 66://B
-    //20210430 set focus
-    ui->BBip->setFocus();
-    ui->BBip_n->setFocus();
-    ui->BBip_2->setFocus();
-    ui->BBip_B->setFocus();
-    //20210430 end  set focus
 	BBip->setDown(1);
 	if(fl_play)break;
 	if(fl_rec){
@@ -3988,12 +3979,6 @@ void Vench::keyPressEvent( QKeyEvent *e )
 	break;
 	
     case 76://L
-    //20210430 set focus
-    ui->BLight->setFocus();
-    ui->BLight_n->setFocus();
-    ui->BLight_2->setFocus();
-    ui->BLight_B->setFocus();
-    //20210430 end  set focus
 	BLight->setDown(1);
 	if(fl_play)break;
 	if(fl_rec){
@@ -4014,13 +3999,6 @@ void Vench::keyPressEvent( QKeyEvent *e )
 //    case 16777235://up
     case 87://up
 //	printf("Kp=%d\n",kp);
-
-    //20210430 set focus
-    ui->BUp->setFocus();
-    ui->BUp_n->setFocus();
-    ui->BUp_2->setFocus();
-    ui->BUp_B->setFocus();
-    //20210430 end  set focus
 
         if (flBlueTooth){
             on_BUp_B_pressed();
@@ -4061,14 +4039,6 @@ void Vench::keyPressEvent( QKeyEvent *e )
 	break;
 //    case 16777237://down
     case 83://down
-
-    //20210430 set focus
-    ui->BDown->setFocus();
-    ui->BDown_n->setFocus();
-    ui->BDown_2->setFocus();
-    ui->BDown_B->setFocus();
-    //20210430 end  set focus
-
         if (flBlueTooth){
             qDebug("BT:down\n");
             on_BDown_B_pressed();
@@ -4110,13 +4080,6 @@ void Vench::keyPressEvent( QKeyEvent *e )
     break;
 //    case 16777234://left
     case 65://left
-    
-    //20210430 set focus
-    ui->BLeft->setFocus();
-    ui->BLeft_n->setFocus();
-    ui->BLeft_2->setFocus();
-    ui->BLeft_B->setFocus();
-    //20210430 end  set focus
         if (flBlueTooth){
             on_BLeft_B_pressed();
             break;
@@ -4159,12 +4122,6 @@ void Vench::keyPressEvent( QKeyEvent *e )
 //    case 16777236:// right
     case 68:// right
 
-    //20210430 set focus
-    ui->BRight->setFocus();
-    ui->BRight_n->setFocus();
-    ui->BRight_2->setFocus();
-    ui->BRight_B->setFocus();
-    //20210430 end  set focus
 
 
 	BRight->setDown(1);
@@ -16930,6 +16887,9 @@ void Vench::on_pushButtonHelp_clicked()
 
 void Vench::on_pushButton_3_clicked()
 {
+
+    QMessageBox::aboutQt(this);
+
 #ifdef LINUX_D
 
 
@@ -16969,24 +16929,12 @@ void Vench::on_pushButton_3_clicked()
     }
     else{// 20210426 altlinux
 
-	QString commands("rpm -q --queryformat \"%{VERSION}\" smartcar");    
-//	QString commands("ls");    
+	QString commands("rpm-q --queryformat \"%{VERSION}\" smartcar ");    
 
-        QByteArray rr = commands.toLocal8Bit();
-
-//	printf("commands\n");
-//	printf("%s \n", rr.constData());
 
     	verStream.start(commands);
-//	verStream.waitForFinished(2000);
-	verStream.waitForFinished();
+	verStream.waitForFinished(2000);
 	QString verS = verStream.readAllStandardOutput();
-
-//         rr = verS.toLocal8Bit();
-
-//	printf("Nomer Versii\n");
-//	printf("%s \n", rr.constData());
-
 
 	QString pf("/usr/share/doc/smartcar-");
 
@@ -17001,11 +16949,15 @@ void Vench::on_pushButton_3_clicked()
 	//qDebug() << verS;
 	//qDebug("File help");
 	//qDebug() << pf;
+        QByteArray rr = verS.toLocal8Bit();
+
+	printf("Nomer Versii\n");
+	printf("%s \n", rr.constData());
 
 	
-//	rr = pf.toLocal8Bit();
-//	printf("File help\n");
-//	printf("%s \n", rr.constData());
+	rr = pf.toLocal8Bit();
+	printf("File help\n");
+	printf("%s \n", rr.constData());
     }
 
 #endif
