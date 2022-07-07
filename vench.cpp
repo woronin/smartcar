@@ -16929,7 +16929,7 @@ void Vench::on_pushButton_3_clicked()
     }
     else{// 20210426 altlinux
 
-	QString commands("rpm-q --queryformat \"%{VERSION}\" smartcar ");    
+	QString commands("rpm -q --queryformat \"%{VERSION}\" smartcar ");    
 
 
     	verStream.start(commands);
