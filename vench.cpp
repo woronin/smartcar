@@ -16887,8 +16887,11 @@ void Vench::on_pushButtonHelp_clicked()
 
 void Vench::on_pushButton_3_clicked()
 {
-
-    QMessageBox::aboutQt(this);
+    QString helpFilePath = QCoreApplication::applicationDirPath() + "/umkiguide.pdf";
+    if (QFileInfo(helpFilePath).exists())
+        QDesktopServices::openUrl(QUrl(helpFilePath, QUrl::TolerantMode));
+    else
+        QDesktopServices::openUrl(QUrl("https://www.umkikit.ru/prog/umkiguide.pdf"));
 
 #ifdef LINUX_D
 
