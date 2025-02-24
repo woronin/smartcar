@@ -26,10 +26,13 @@ QT += xml
 
 # Input
 HEADERS += channel.h define.h formview.h formzastav.h vench.h \
-    formhlp.h
+    formhlp.h \
+    forms/mainwindow.h
 FORMS += vench.ui \
-    formhlp.ui
+    formhlp.ui \
+    forms/mainwindow.ui
 SOURCES += channel.cpp \
+    forms/mainwindow.cpp \
            formview.cpp \
            formzastav.cpp \
            main.cpp \

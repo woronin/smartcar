@@ -192,7 +192,7 @@ public:
 
 //    explicit Vench(QWidget* parent = 0,char * kat="",char * prt="",int fBT=0, int fKon=0,char * nf ="");
 
-    explicit Vench(QWidget* parent ,char * kat,char * prt,int fBT, int fKon,char * nf);
+    explicit Vench(QWidget* parent, QString kat, QString prt, bool isBluetoothMode, int fKon, QString nf);
 
  ~Vench();
 
@@ -224,7 +224,7 @@ public:
 
     struct Spisoc_ust act_ust[100];
 
-    int flBlueTooth;
+    bool fl_bluetooth;
 
 	int fl_period_e;
 	double t_oprosa_e;
@@ -299,7 +299,7 @@ public:
 
     unsigned char buf_zd[80];
 
-    char katalog[1000];
+    QString katalog;
     int fl_kat;
     int fl_port_s;
     int flag_com;
@@ -573,8 +573,8 @@ public slots:
     //vozvrashaet nomer ustr v massive po ego mac-adresu
     int GetNumberUst(unsigned char *mac);
 
-    virtual void SetKatalog(char*);
-    virtual void SetPort(char*);
+    virtual void SetKatalog(QString);
+    virtual void SetPort(QString);
 
     virtual void SbrosDatKas();
 
@@ -899,7 +899,7 @@ protected:
     QTimer * timer;
     double timer_init_port;
 
-    char *name_file_console;
+    QString name_file_console;
     int flConsole;
       int fl_print_log_B;
 protected slots:

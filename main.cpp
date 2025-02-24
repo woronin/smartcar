@@ -6,142 +6,75 @@
 #include <qsplashscreen.h>
 #include <qpixmap.h>
 #include <stdio.h>
+#include <QtCore>
 
 
+#include "forms/mainwindow.h"
 
 int main( int argc, char ** argv )
 {
-    
-    qDebug("Version 20210428\n");
-//    printf("start program\n");
     QApplication a( argc, argv );
-//    Vench *w = new Vench(0,0,0,0x00000200);
-//    Vench *w = new Vench(0,0,0);
+    bool isBluetoothMode = false;
+    int flKonsol = 0;
 
-//QPixmap  zt;
-//zt.load("zst.jpg");
-//    QSplashScreen *splash =
-//            new QSplashScreen(zt);
-//    splash->show();
-//    splash->finish(w);
-//    delete splash;
-//
-    int i;
-    int flBlueTooth;// flag raboti s ustroistvom BT (==1) (esli raven 0 - to ustroistvo ZeegBee)
-    int flKonsol;// rabota bez paneley chisto v konsole s ukazannim filom
-    
-    
-    flKonsol=0;
-    flBlueTooth=0;
-//    if (argc>1) if ((argv[1][0] == '-')&&(argv[1][1] == 'b')) {
-//	printf("Protokol BlueTooth\n");
-//	flBlueTooth=1 ;
-//    }
-    
-    
+    QString name_file;
+    QString katalog;
+    QString port_s;
 
-    char name_file[20]; // ima ustroistva
-    for(i=0;i<20;i++) name_file[i]=0;
+    // parse argv
+    int i = 1;
+    while (i < argc)
+    {
+        QString arg1 = argv[i];
+        ++i;
 
-    char katalog[20]; // ima ustroistva
-    for(i=0;i<20;i++) katalog[i]=0;
+        if (arg1 == "-b")
+        {
+            printf("BlueTooth Mode\n");
+            isBluetoothMode = true;
+        }
 
-    char port_s[20]; // ima ustroistva
-    for(i=0;i<20;i++) port_s[i]=0;
-    
-    int fl_port_s=0;
-
-    int fl_kat=0;
-// proveraem na vvedennie parametr    
-    for (i=0;i<argc;i++){
-
-	if (strcmp(argv[i],"-k")==0){
-	    if (i<argc-1){
-		strcpy(katalog,argv[i+1]);
-		fl_kat =1;
-		i++;
-//		printf("%s\n",katalog);
-	    }
-	    else {
-		printf("ERROR: katalog\n"); 
-	    }
-	    
-	}
-	
-
-	if (strcmp(argv[i],"-d")==0){
-	    if (i<argc-1){
-		strcpy(port_s,argv[i+1]);
-		fl_port_s =1;
-		i++;
-//		printf("%s\n",katalog);
-	    }
-	    else {
-		printf("ERROR:port\n"); 
-	    }
-	}
-
-	if (strcmp(argv[i],"-b")==0){
-		printf("Protokol BlueTooth\n");
-		flBlueTooth=1 ;
-	}
+        if (arg1 == "-k")
+            if (i < argc)
+            {
+                katalog = argv[i];
+                ++i;
+            } else
+                printf("ERROR: katalog\n");
 
 
-	if (strcmp(argv[i],"-f")==0){
-		flKonsol =1;
-		printf("Consol mode\n");
-	    if (i<argc-1){
-		strcpy(name_file,argv[i+1]);
-		fl_port_s =1;
-		i++;
-		printf("file : %s\n",name_file);
-	    }
-	    else {
-		printf("ERROR:file\n"); 
-	    }
-	}
 
-	if (strcmp(argv[i],"-F")==0){
-		flKonsol =2;
-		printf("Consol mode\n");
-	    if (i<argc-1){
-		strcpy(name_file,argv[i+1]);
-		fl_port_s =1;
-		i++;
-		printf("file : %s\n",name_file);
-	    }
-	    else {
-		printf("ERROR:file\n"); 
-	    }
-	}
+        if (arg1 == "-d")
+            if (i < argc)
+            {
+                port_s = argv[i];
+                ++i;
+            } else
+                printf("ERROR:port\n");
 
+        if (arg1 == "-f" || arg1 == "-F")
+        {
+            if (arg1 == "-f")
+                flKonsol = 1;
+            else
+                flKonsol = 2;
 
+            printf("Consol mode\n");
+
+            if (i < argc)
+            {
+                name_file = argv[i];
+
+                printf("file : %s\n",qPrintable(name_file));
+                ++i;
+            } else
+                printf("ERROR:file\n");
+        }
     }
 
-
-
-
-
-
-    if (!flKonsol){
-//        FormZastav *Zastav;
-//	Zastav = new FormZastav(0,katalog) ;
-//        Zastav->exec();
-//        delete Zastav;
-    }
-    
-    Vench *w ;
-    char * kt=0;
-    char * prt=0;
-    
-    if (fl_port_s) prt = port_s; 
-    if (fl_kat)   w= new Vench(0,katalog,prt,flBlueTooth,flKonsol,name_file);
-    else	w= new Vench(0,kt,prt,flBlueTooth,flKonsol,name_file);
-    
-    
+    //Vench *w = new Vench(0, katalog, port_s, isBluetoothMode, flKonsol, name_file);
+    MainWindow* w = new MainWindow();
     if (!flKonsol) w->show();
-
-
 
     a.connect( &a, SIGNAL( lastWindowClosed() ), &a, SLOT( quit() ) );
     return a.exec();

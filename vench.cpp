@@ -176,20 +176,10 @@ void Vench::DatKas(int num){//0 - right 1 - left
 
 //Vench::Vench(QWidget* parent):QDialog( parent,Qt::WindowMinMaxButtonsHint|Qt::WindowSystemMenuHint )
 
-Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf):QDialog( parent,Qt::Window|Qt::WindowSystemMenuHint|Qt::WindowMinMaxButtonsHint|Qt::WindowCloseButtonHint),
+Vench::Vench(QWidget* parent, QString kat, QString prt, bool isBluetoothMode, int fKon, QString nf):QDialog( parent,Qt::Window|Qt::WindowSystemMenuHint|Qt::WindowMinMaxButtonsHint|Qt::WindowCloseButtonHint),
     ui(new Ui::Vench)
 {
-
-    
-//    if ( !name )	setName( "Vench" );
-
-//    if (fKon == 1){
-//	this->setVisible(false);
-//    }
-    
-    flBlueTooth =0;
-
-    flBlueTooth =fBT;
+    fl_bluetooth = isBluetoothMode;
 
     fl_altlin=0;
 
@@ -197,7 +187,6 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
     QTextCodec::setCodecForTr(QTextCodec::codecForName ("Windows-1251"));
 #endif
   ui->setupUi(this);
-  //this->setGeometry( QRect( 0, 0, 860, 735 ) );
 
   ui->stackedWidget->hide();
   mSleep(100);
@@ -207,9 +196,6 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
     ui->BCar_2->setFont(ft);
     ui->BCar_1->setFont(ft);
 
-//    setMinimumSize( QSize( 600, 370 ) );
-//    setMaximumSize( QSize( 600, 370 ) );
-
     setAcceptDrops( false );
     setSizeGripEnabled( false );
     setModal( false );
@@ -217,15 +203,11 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
     timer = new QTimer(this);
 
     tabWidget2 = new QTabWidget( this );
-//    tabWidget2->setGeometry( QRect( 10, 0, 580, 370 ) );
     tabWidget2->hide();
 
 
 
     tab = new QWidget( tabWidget2 );
-//    tab_4 = new QWidget( tabWidget2 );
-
-//    tab_2 = new QWidget( tabWidget2 );
     tab_3 = new QWidget( tabWidget2 );
     tab_5 = new QWidget( tabWidget2 );
     tab_6 = new QWidget( tabWidget2 );
@@ -286,30 +268,6 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
     QPalette pl(Qt::lightGray,Qt::lightGray);
     pl.setColor(QPalette::Base,Qt::lightGray);
 
-    //m TLabLeftDat = new QTextEdit( trUtf8("Датчик\nкасания") ,tab );
-//    TLabLeftDat->setGeometry( QRect(265, 270, 60, 40 ) );
-//m    TLabLeftDat->setGeometry( QRect(90, 270, 85, 50 ) );
- //m   TLabLeftDat->setPalette(pl);
-//    TLabLeftDat->setReadOnly(   true );
-
-//m    TLabRightDat = new QTextEdit( trUtf8("Датчик\nкасания") ,tab );
-//m    TLabRightDat->setGeometry( QRect(260, 270, 85, 50 ) );
-//m    TLabRightDat->setPalette(pl);
-//m    TLabRightDat->setReadOnly(   true );
-
-
-    
-    
-// ������ ���������� �� ���. �������     - ������������ (��� ���� ����
-//    TLabAns_lab = new QLabel( trUtf8("Статус устройства") ,tab_2 );
-//    TLabAns_lab->setGeometry( QRect(40, 100, 300, 20 ) );
-
-//    TLabAns = new QLineEdit( ans1,tab_2 );
-//    TLabAns->setGeometry( QRect(40, 120, 300, 20 ) );
-// end ������ ���������� �� ���. �������     - ������������ (��� ���� ����
-
-
-    // ������ ����
     TextLabel2_3 = new QLabel( trUtf8("Команда для устройства") ,tab);
     TextLabel2_3->setGeometry( QRect( 40, 530, 200, 20 ) );
 
@@ -333,47 +291,33 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
     TLabAnsFirst = new QLineEdit( ans1,tab);
     TLabAnsFirst->setGeometry( QRect(40, 75, 300, 20 ) );
     pl_ans_ust = new QPalette(Qt::red,Qt::red);
-//    QPalette pl(Qt::red,Qt::red);
     pl.setColor(QPalette::Base,Qt::red);
-//    TLabAns->setPalette(pl);
-//    TLabAns->setReadOnly(  true );
-
     TLabAnsFirst->setPalette(pl);
     TLabAnsFirst->setReadOnly(  true );
 
     if (ui->TLabAnsFirst_n) {
-//        	ui->TLabAnsFirst_n->setPalette(*pl_ans_ust);
         	ui->TLabAnsFirst_n->setPalette(pl);
         	ui->TLabAnsFirst_n->setText(ans1);
     }
 
-
-//    TextLabel2 = new QLabel( "TextLabel2",this );
     TextLabel2 = new QLabel( "",tab );
     TextLabel2->setGeometry( QRect( 40, 10, 200, 20 ) );
     TextLabel2->setVisible(false);
 
     SpActDatch = new QComboBox(tab);
-//    SpActDatch->activated( "SpActDatch" );
     SpActDatch->setGeometry( QRect( 40, 30, 250, 22 ) );
     SpActDatch->setVisible(false);
-//    SpActDatch->setRootModelIndex(this);
-//    TextLabel2_2 = new QLabel( "TextLabel2_2" ,this);
     TextLabel2_2 = new QLabel( "" ,tab);
     TextLabel2_2->setGeometry( QRect( 40, 10, 200, 20 ) );
 
-
-//    checkKumir = new QCheckBox(  "checkKumir",this );
     checkKumir = new QCheckBox(  "",tab );
     checkKumir->setGeometry( QRect( 460, 520, 180, 22 ) );
     checkKumir->setChecked(  true );
 
-//    checkLog = new QCheckBox( "checkLog",this );
     checkLog = new QCheckBox( "",tab );
     checkLog->setGeometry( QRect( 460, 540, 160, 22 ) );
     checkLog->setChecked( false );
 
-//    checkCicl = new QCheckBox("checkCicl",this );
     checkCicl = new QCheckBox("",tab );
     checkCicl->setGeometry( QRect( 460, 560, 160, 22 ) );
     checkCicl->setChecked( false );
@@ -406,16 +350,13 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
 
     BDiscrImp = new QPushButton( trUtf8("Сменить") ,tab);
     BDiscrImp->setGeometry( QRect( 460, 160, 90, 30 ) );
-//    BDiscrImp->hide();//likvidiruem zadanie kol-va imp dla dsikret digenia
     
     DiscrImpE = new QLineEdit(  "10",tab );
     DiscrImpE->setEnabled(  true );
     DiscrImpE->setGeometry( QRect( 400, 165, 50, 22 ) );
-//    DiscrImpE->hide();//likvidiruem zadanie kol-va imp dla dsikret digenia
 
     TextLabel6 = new QLabel( trUtf8("Имп"),tab );
     TextLabel6->setGeometry( QRect( 355, 165, 30, 20 ) );
-//    TextLabel6->hide();//likvidiruem zadanie kol-va imp dla dsikret digenia
 
     TextLabelSpeed = new QLabel( trUtf8("Скорость"),tab );
     TextLabelSpeed->setGeometry( QRect( 355, 235, 70, 20 ) );
@@ -442,14 +383,12 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
 
     BShift = new QPushButton( "BShift" ,tab);
     BShift->setGeometry( QRect( 10, 300, 90, 29 ) );
-//    BShift->setToggleButton(  true );
-//    BShift->setFlat( false );
+
     BShift->setCheckable(  true );
     BShift->setVisible( false );
 
     BStop = new QPushButton(  "BStop" ,tab);
     BStop->setGeometry( QRect( 360, 300, 60, 29 ) );
-//    BStop->setToggleButton( false );
 
     BLight = new QPushButton( "BLight" ,tab);
     BLight->setGeometry( QRect( 20, 150, 50, 29 ) );
@@ -460,7 +399,6 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
     BAntiSleep = new QPushButton( "BAntiSleep" ,tab);
     BAntiSleep->setGeometry( QRect( 430, 70, 104, 29 ) );
 
-//    checkAll = new QCheckBox( "checkAll" ,this);
     checkAll = new QCheckBox( "" ,tab);
     checkAll->setGeometry( QRect( 355, 110, 140, 22 ) );
     checkAll->setChecked( false );
@@ -477,7 +415,6 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
 
     BPokazProgr = new QPushButton( trUtf8("Программа") ,tab);
     BPokazProgr->setGeometry( QRect( 120, 615, 95, 29 ) );
-    //BPokazProgr->setCheckable(  true );
 
     BPlay = new QPushButton( trUtf8("Поехали") ,tab);
     BPlay->setGeometry( QRect( 230, 615, 95, 29 ) );
@@ -485,16 +422,13 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
 
     BProdol = new QPushButton( trUtf8("Продолжить") ,tab);
     BProdol->setGeometry( QRect( 335, 615, 95, 29 ) );
-    //BPlay->setCheckable(  true );
 
 
     BLog = new QPushButton( trUtf8("LOG-файл") ,tab);
     BLog->setGeometry( QRect( 460, 615, 95, 29 ) );
-    //BPokazProgr->setCheckable(  true );
 
     BParam = new QPushButton( trUtf8("Параметры") ,tab);
     BParam->setGeometry( QRect( 460, 585, 95, 29 ) );
-    //BPokazProgr->setCheckable(  true );
 
 
     BDim = new QPushButton( tr("�������������") ,tab_3);
@@ -538,7 +472,6 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
     LbEn->setGeometry( QRect( 280, 180, 20, 46 ) );
 
     BTemp = new QPushButton( tr("�����������,\n ������������") ,tab_3);
-//        BTemp = new QPushButton( trUtf8("Температура") ,tab_3);
     BTemp->setCheckable(  true );
     BTemp->setGeometry( QRect( 20, 60, 190, 46 ) );
 
@@ -557,12 +490,10 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
     BGrph = new QPushButton( trUtf8("График температуры") ,tab_3);
     BGrph->setCheckable(  true );
     BGrph->setGeometry( QRect( 20, 110, 190, 26 ) );
-    //    BShift->setToggleButton(  true);
 
     BGrphE = new QPushButton( trUtf8("График энергии") ,tab_3);
     BGrphE->setCheckable(  true );
     BGrphE->setGeometry( QRect( 20, 230, 190, 26 ) );
-    //    BShift->setToggleButton(  true );
 
     BGrphB = new QPushButton( trUtf8("График давления") ,tab_3);
     BGrphB->setGeometry( QRect( 320, 230, 190, 26 ) );
@@ -573,14 +504,9 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
     BGrphVl->setCheckable(  true );
 
 
-    //    BRezult = new QPushButton( trUtf8("� езультаты") ,tab_3); \xd0
-    //    BRezult = new QPushButton( trUtf8("\xd0\xa0езультаты (температура)") ,tab_3);
+
     BRezult = new QPushButton( trUtf8("\xd0\xa0езультаты ") ,tab_3);
     BRezult->setGeometry( QRect( 20, 310, 190, 26 ) );
-
-//    BRezultE = new QPushButton( trUtf8("\xd0\xa0езультаты (энергия)") ,tab_3);
-//    BRezultE->setGeometry( QRect( 220, 256, 190, 26 ) );
-
 
     checkVibrUst = new QCheckBox( "" ,tab);
     checkVibrUst->setGeometry( QRect( 50, 450, 260, 22 ) );
@@ -769,14 +695,12 @@ Vench::Vench(QWidget* parent,char * kat, char* prt, int fBT, int fKon,char * nf)
 
     fl_kat=0;
     fl_port_s=0;
-    
-    QString mkat(kat);
-    if (mkat!=""){
+
+    if (!kat.isEmpty()){
         SetKatalog(kat);
     //	qDebug("EEEEEEEEE\n");
     }
-    QString mprt(prt);
-    if (mprt!=""){
+    if (!prt.isEmpty()){
         SetPort(prt);
     //	qDebug("EEEEEEEEE\n");
     }
@@ -1769,7 +1693,7 @@ void Vench::ProcessTimer()
 
 	}
 	mSleep(3);
-	if (!flBlueTooth){
+    if (!fl_bluetooth){
     	    SendVklAPI();
 	    SendVklNP();
     	    SendZaprosI();
@@ -4000,7 +3924,7 @@ void Vench::keyPressEvent( QKeyEvent *e )
     case 87://up
 //	printf("Kp=%d\n",kp);
 
-        if (flBlueTooth){
+        if (fl_bluetooth){
             on_BUp_B_pressed();
             break;
         }
@@ -4039,7 +3963,7 @@ void Vench::keyPressEvent( QKeyEvent *e )
 	break;
 //    case 16777237://down
     case 83://down
-        if (flBlueTooth){
+        if (fl_bluetooth){
             qDebug("BT:down\n");
             on_BDown_B_pressed();
             break;
@@ -4080,7 +4004,7 @@ void Vench::keyPressEvent( QKeyEvent *e )
     break;
 //    case 16777234://left
     case 65://left
-        if (flBlueTooth){
+        if (fl_bluetooth){
             on_BLeft_B_pressed();
             break;
         }
@@ -4126,7 +4050,7 @@ void Vench::keyPressEvent( QKeyEvent *e )
 
 	BRight->setDown(1);
 
-        if (flBlueTooth){
+        if (fl_bluetooth){
             on_BRight_B_pressed();
             break;
         }
@@ -4188,18 +4112,15 @@ void Vench::keyPressEvent( QKeyEvent *e )
 }
 
 
-void Vench::SetKatalog(char* kat)
+void Vench::SetKatalog(QString kat)
 {
-    strcpy(katalog,kat);
+    katalog = kat;
     fl_kat=1;
 }
 
-void Vench::SetPort(char* kat)
+void Vench::SetPort(QString kat)
 {
-    
     addr = kat;
-//    qDebug("PPPP\n");
-//    qDebug()<<addr;
     fl_port_s=1;
 }
 
@@ -4427,7 +4348,7 @@ void Vench::init()
     imp_diskr= 12;
     addr_win = "COM3";
     fl_begin=2;
-    if (flBlueTooth) fl_begin =4;
+    if (fl_bluetooth) fl_begin =4;
 
     ReadIni();
 
@@ -4514,7 +4435,7 @@ void Vench::init()
 
     thrRS->start();
 
-    if (!flBlueTooth){
+    if (!fl_bluetooth){
 	SendVklAPI();
 	SendVklNP();
 	SendZaprosI();
@@ -4574,7 +4495,7 @@ void Vench::init()
 //    d_yd[70] = -10;
 
 
-    if (flBlueTooth==0) {
+    if (!fl_bluetooth) {
         ui->BDopParam->setChecked(1);
         BPressedDopParam();
     }
@@ -4688,7 +4609,7 @@ void Vench::keyReleaseEvent( QKeyEvent *e )
 
 //	printf("Kp1=%d\n",kp);
 
-        if (flBlueTooth){
+        if (fl_bluetooth){
 	    SendCommStop_ave_BT();
             break;
         }
@@ -4713,7 +4634,7 @@ void Vench::keyReleaseEvent( QKeyEvent *e )
 	break;
 //    case 16777237://down
     case 83://down
-        if (flBlueTooth){
+        if (fl_bluetooth){
 	    SendCommStop_ave_BT();
             break;
         }
@@ -4735,7 +4656,7 @@ void Vench::keyReleaseEvent( QKeyEvent *e )
 //    case 16777234://left
     case 65://left
 //	printf("terfdsvdcvc\n");
-        if (flBlueTooth){
+        if (fl_bluetooth){
 	    SendCommStop_ave_BT();
             break;
         }
@@ -4757,7 +4678,7 @@ void Vench::keyReleaseEvent( QKeyEvent *e )
 	break;
 //    case 16777236:// right
     case 68:// right
-        if (flBlueTooth){
+        if (fl_bluetooth){
 	    SendCommStop_ave_BT();
             break;
         }
@@ -4783,7 +4704,7 @@ void Vench::keyReleaseEvent( QKeyEvent *e )
 	break;
 	
     case 32://probel
-        if (flBlueTooth){
+        if (fl_bluetooth){
 	    SendCommStop_ave_BT();
             break;
         }
@@ -6508,7 +6429,7 @@ void Vench::BPressBar()
 int Vench::SetAnswerUstr(int imp1, int imp2,int nD){
     
 
-    if ((fl_rec)&&(!flBlueTooth)){
+    if ((fl_rec)&&(!fl_bluetooth)){
         if(num_comm<NUM_COMM){
             if (checkDiskr->isChecked() ==  true){
                 mass_comm_n[num_comm][0] = imp1;
@@ -6627,7 +6548,7 @@ void Vench::TestFile(void * param)
 
         if (md->fl_play){
             if (ntec<md->num_comm){
-                if (!md->flBlueTooth){
+                if (!md->fl_bluetooth){
                     if ((md->fl_play_comm==0)||(md->checkAll->isChecked()== true)){//poprobovat moget kogda shirokoveshat budet luchshe ezdit
                         md->fl_play_comm=1;
                         if (md->checkAll->isChecked()== true) {
@@ -9909,7 +9830,7 @@ void Vench::ReadIni()
             if (t=="SUPER_N")      fl_begin=0;
             if (t=="BASE")         fl_begin=2;
 
-            if (flBlueTooth) fl_begin =4;
+            if (fl_bluetooth) fl_begin =4;
 
         t= tt.readLine();
         i=0;
@@ -15384,7 +15305,7 @@ void Vench::BRec_pressed_n()
     //if (ui->BRec_n->isChecked()==1) return;
 
     if (fl_rec==0) {    
-        if (!flBlueTooth) {
+        if (!fl_bluetooth) {
             BRec->setChecked( true);
             BPressRec();
         }
@@ -15398,7 +15319,7 @@ void Vench::BRec_pressed_n()
     }
     
     if (fl_rec==1) {    
-        if (!flBlueTooth) {
+        if (!fl_bluetooth) {
             BRec->setChecked(false);
             BRealeseRec();
         }
@@ -15463,8 +15384,8 @@ void Vench::on_pBProgr_clicked()
     #ifdef LINUX_D
 //    fnamec= fnamec+"/"+f_name_kum;
 
-    if (flBlueTooth==0) fnamec= fnamec+f_name_kum;
-    if (flBlueTooth==1) fnamec= fnamec+f_name_snap;
+    if (!fl_bluetooth) fnamec= fnamec+f_name_kum;
+    if (fl_bluetooth) fnamec= fnamec+f_name_snap;
 
     #endif
 
@@ -15774,7 +15695,7 @@ void Vench::rBAll()
 }
 void Vench::SendCommBipBT()
 {
-    if (!flBlueTooth) return;
+    if (!fl_bluetooth) return;
 
 
 
@@ -15792,7 +15713,7 @@ void Vench::SendCommBipBT()
 
 void Vench::SendCommLightBT()
 {
-    if (!flBlueTooth) return;
+    if (!fl_bluetooth) return;
 
 
 
@@ -15810,7 +15731,7 @@ void Vench::SendCommLightBT()
 
 void Vench::SendCommForw_ave_BT()
 {
-    if (!flBlueTooth) return;
+    if (!fl_bluetooth) return;
 
 
 
@@ -15837,7 +15758,7 @@ void Vench::SendCommForw_ave_BT()
 
 void Vench::SendCommRevers_ave_BT()
 {
-    if (!flBlueTooth) return;
+    if (!fl_bluetooth) return;
 
 
 
@@ -15863,7 +15784,7 @@ void Vench::SendCommRevers_ave_BT()
 
 void Vench::SendCommLeft_ave_BT()
 {
-    if (!flBlueTooth) return;
+    if (!fl_bluetooth) return;
 
 
 
@@ -15889,7 +15810,7 @@ void Vench::SendCommLeft_ave_BT()
 
 void Vench::SendCommRight_ave_BT()
 {
-    if (!flBlueTooth) return;
+    if (!fl_bluetooth) return;
 
 
 
@@ -15916,7 +15837,7 @@ void Vench::SendCommRight_ave_BT()
 
 void Vench::SendCommStop_ave_BT()
 {
-    if (!flBlueTooth) return;
+    if (!fl_bluetooth) return;
 
 
 
@@ -16526,8 +16447,6 @@ void Vench::ReadSnap(QString &txt)
         QDomNode node1,node2,node3,node4,node5,node6;
 
         QString fnamec;
-
-	QString nfs(name_file_console);
 	
         fnamec= ServerDir->text();
 
@@ -16542,8 +16461,8 @@ void Vench::ReadSnap(QString &txt)
 
 	
 	if (flConsole) fnamec= ServerDir->text();
-	if (flConsole==1)  fnamec= fnamec + nfs;
-	if (flConsole==2)  fnamec= nfs;
+    if (flConsole==1)  fnamec= fnamec + name_file_console;
+    if (flConsole==2)  fnamec= name_file_console;
  
 	qDebug()<<"lll";
         qDebug()<<fnamec;
