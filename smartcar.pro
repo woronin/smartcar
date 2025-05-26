@@ -26,18 +26,29 @@ QT += xml
 
 # Input
 HEADERS += channel.h define.h formview.h formzastav.h vench.h \
-    formhlp.h \
-    forms/mainwindow.h
+    forms/basemode.h \
+    forms/bluetoothmode.h \
+    forms/mainwindow.h \
+    forms/supermode.h \
+    forms/zigbeemode.h \
+    worklogicalmodul.h
 FORMS += vench.ui \
-    formhlp.ui \
-    forms/mainwindow.ui
+    forms/basemode.ui \
+    forms/bluetoothmode.ui \
+    forms/mainwindow.ui \
+    forms/supermode.ui \
+    forms/zigbeemode.ui
 SOURCES += channel.cpp \
+    forms/basemode.cpp \
+    forms/bluetoothmode.cpp \
     forms/mainwindow.cpp \
+    forms/supermode.cpp \
+    forms/zigbeemode.cpp \
            formview.cpp \
            formzastav.cpp \
            main.cpp \
            vench.cpp \
-    formhlp.cpp
+    worklogicalmodul.cpp
 
 RESOURCES += \
     res.qrc

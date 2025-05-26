@@ -26,19 +26,17 @@
 //----------------------------------------------------------
 
 int channel_open(TChannel *sock, // Создаваемый канал
-				int a_proto,    // Протокол (PROTO_UDP или PROTO_RS232)
-				int a_mode,     // Режим (READ_MODE, WRITE_MODE, READWRITE_MODE)
-				int port,       // Порт (для UDP) или скорость (для RS232)
-				char *addr,     // IP-Адрес или имя COM-порта
-				TReader rdr,    // Процедура чтения из канала
-				TWriter wr,     // Процедура записи в канал
-				TEvent r_action,// Процедура, вызываемая после чтения
-				TEvent w_action // Процедура, вызываемая после записи
+                int a_proto,     // Протокол (PROTO_UDP или PROTO_RS232)
+                int a_mode,      // Режим (READ_MODE, WRITE_MODE, READWRITE_MODE)
+                int port,        // Порт (для UDP) или скорость (для RS232)
+                char *addr,      // IP-Адрес или имя COM-порта
+                TReader rdr,     // Процедура чтения из канала
+                TWriter wr,      // Процедура записи в канал
+                TEvent r_action, // Процедура, вызываемая после чтения
+                TEvent w_action  // Процедура, вызываемая после записи
 				)
 {
-//	#ifdef LINUX_DEBUG
-	int opt=1;
-//	#endif
+    int opt=1;
 	sock->port=port; strcpy(sock->addr, addr);
 	sock->mode=a_mode; sock->proto=a_proto;
 	sock->Reader=rdr; sock->onRead=r_action;
@@ -47,14 +45,11 @@ int channel_open(TChannel *sock, // Создаваемый канал
 	{
 		struct sockaddr_in sa;
 		sock->sd=socket(PF_INET, SOCK_DGRAM, 0);
-		if(sock->sd == -1) perror("socket:");
-//		#ifdef LINUX_DEBUG
+        if(sock->sd == -1) perror("socket:");
 		if(setsockopt(sock->sd, SOL_SOCKET, SO_BROADCAST, &opt, sizeof(opt))==-1)
 			perror("setsockopt:");
-		if(setsockopt(sock->sd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))==-1) // in Linux
-//		if(setsockopt(sock->sd, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt))==-1)
-			perror("setsockopt:");
-//		#endif
+        if(setsockopt(sock->sd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))==-1)
+            perror("setsockopt:");
 		if(a_mode & READ_MODE)
 		{
 			memset(&sa, 0, sizeof(sa));

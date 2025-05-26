@@ -73,7 +73,7 @@ int main( int argc, char ** argv )
     }
 
     //Vench *w = new Vench(0, katalog, port_s, isBluetoothMode, flKonsol, name_file);
-    MainWindow* w = new MainWindow();
+    MainWindow *w = new MainWindow(katalog, port_s, isBluetoothMode, flKonsol, name_file);
     if (!flKonsol) w->show();
 
     a.connect( &a, SIGNAL( lastWindowClosed() ), &a, SLOT( quit() ) );
