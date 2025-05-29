@@ -35,7 +35,6 @@ BluetoothMode::BluetoothMode(Vench *vench, QWidget *parent) :
     connect(ui->BPokazProgr, &QPushButton::clicked, m_vench, &Vench::ProgrClicked);
     connect(ui->BRec, &QPushButton::clicked, this, &BluetoothMode::RecClicked);
     connect(ui->BPlay, &QPushButton::clicked, this, &BluetoothMode::PlayClicked);
-    connect(ui->BContinue, &QPushButton::clicked, m_vench, &Vench::BPressProdol);
 }
 
 void BluetoothMode::RuchnCommClicked()

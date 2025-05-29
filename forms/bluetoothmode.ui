@@ -23,31 +23,6 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="label_31">
-       <property name="mouseTracking">
-        <bool>false</bool>
-       </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 0);</string>
-       </property>
-       <property name="text">
-        <string>ТИП КОНТРОЛЛЕРА BlueTooth </string>
-       </property>
-       <property name="scaledContents">
-        <bool>false</bool>
-       </property>
-       <property name="wordWrap">
-        <bool>false</bool>
-       </property>
-       <property name="indent">
-        <number>-2</number>
-       </property>
-      </widget>
-     </item>
-     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -80,19 +55,6 @@
         </widget>
        </item>
       </layout>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_6">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
      </item>
     </layout>
    </item>
@@ -487,16 +449,6 @@
           </widget>
          </item>
         </layout>
-       </item>
-       <item>
-        <widget class="QPushButton" name="BContinue">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Продолжить</string>
-         </property>
-        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer_4">
