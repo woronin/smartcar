@@ -25,6 +25,7 @@ BluetoothMode::BluetoothMode(Vench *vench, QWidget *parent) :
     connect(ui->BRight, &QPushButton::released, m_vench, &Vench::SendCommStop_ave_BT);
     connect(ui->BDown, &QPushButton::pressed,  m_vench, &Vench::on_BDown_B_pressed);
     connect(ui->BDown, &QPushButton::released, m_vench, &Vench::SendCommStop_ave_BT);
+    connect(ui->BStop, &QPushButton::pressed,  m_vench, &Vench::SendCommStop_ave_BT);
 
     connect(ui->CommTextEdit, &QLineEdit::returnPressed, this, &BluetoothMode::RuchnCommClicked);
     connect(ui->BRuchnComm, &QPushButton::clicked, this, &BluetoothMode::RuchnCommClicked);
