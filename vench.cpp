@@ -625,7 +625,6 @@ void Vench::ProcessTimer()
 
         if (flcomport != 0)
         {
-            qWarning("flcomport == 0  flcomport != 0");
             ansStatus = 1;
             emit AnsStatusChanged();
         }
@@ -1884,7 +1883,6 @@ void Vench::init()
 
     if (flcomport != 0)
     {
-        qWarning("flcomport != 0");
         ansStatus = 1;
         emit AnsStatusChanged();
     }
@@ -7513,7 +7511,6 @@ int Vench::SendCommForRS(const char * str)
 
     while(1)
     {
-        qWarning() << mstr;
         if (flag_com == 0)
         {
             fs = sscanf(mstr, "%s", ss);
@@ -9004,7 +9001,6 @@ QString Vench::ServerDir()
 
 QString Vench::AnsStatus()
 {
-    qWarning("Hey!");
     if (ansStatus == 0)
         return "Канал обмена не инициализирован";
     if (ansStatus == 1)
@@ -9016,7 +9012,6 @@ QString Vench::AnsStatus()
 
 QColor Vench::AnsStatusColor()
 {
-    qWarning("Hey!2");
     if (ansStatus == 0)
         return Qt::red;
     if (ansStatus == 1)

@@ -24,10 +24,8 @@ void WorkLogicalModul::OpenGuidDoc()
 
 void WorkLogicalModul::LStatusChanged()
 {
-    qWarning("WorkLogicalModul");
 }
 
 void WorkLogicalModul::RegGrphTextChanged(QString text)
 {
-    qWarning() << "WorkLogicalModul " << text;
 }
