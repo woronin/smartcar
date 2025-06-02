@@ -148,19 +148,12 @@ enum Dat
     Left = 1,
 };
 
-namespace Ui {
-class Vench;
-}
-
-
-class Vench:public QDialog//,public Ui::Vench
+class Vench: public QObject
 {
 Q_OBJECT
-private:
-    Ui::Vench *ui;
 public:
 
-    explicit Vench(QWidget* parent, QString kat, QString prt, bool isBluetoothMode, int fKon, QString nf);
+    explicit Vench(QString kat, QString prt, bool isBluetoothMode, int fKon, QString nf, QObject* parent = nullptr);
 
  ~Vench();
 
@@ -477,10 +470,7 @@ public slots:
     virtual void SendComm( QString  hcm );
     virtual void ObSpActUst();
     virtual void SendCommObnovit();
-    virtual void keyPressEvent( QKeyEvent * e );
     virtual void init();
-    virtual void destroy();
-    virtual void keyReleaseEvent( QKeyEvent * e );
     virtual void SendCommTempOff();
     virtual void SendCommTempOn();
     virtual void SendCommBarOn();

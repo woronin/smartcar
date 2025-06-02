@@ -16,7 +16,7 @@ MainWindow::MainWindow(QString kat, QString prt, bool isBluetoothMode, int fKon,
     setAcceptDrops(false);
     setFocusPolicy(Qt::ClickFocus);
 
-    m_vench = new Vench(this, kat, prt, isBluetoothMode, fKon, nf);
+    m_vench = new Vench(kat, prt, isBluetoothMode, fKon, nf);
 
     if (isBluetoothMode)
         ui->centralwidget->layout()->addWidget(new BluetoothMode(m_vench, this));

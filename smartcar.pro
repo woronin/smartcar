@@ -32,7 +32,7 @@ HEADERS += channel.h define.h formview.h formzastav.h vench.h \
     forms/supermode.h \
     forms/zigbeemode.h \
     worklogicalmodul.h
-FORMS += vench.ui \
+FORMS += \
     forms/basemode.ui \
     forms/bluetoothmode.ui \
     forms/mainwindow.ui \

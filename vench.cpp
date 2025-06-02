@@ -112,12 +112,11 @@
 
 #include <vench.h>
 
-#include "ui_vench.h"
-
 #include <string.h>
 #include <unistd.h>
 #include <qdir.h>
 #include <qmessagebox.h>
+#include <QMessageBox>
 
 #include <sys/time.h>
 
@@ -148,8 +147,8 @@ void Vench::DatKas(Dat dat) //0 - right 1 - left
     emit DatChanged(dat);
 }
 
-Vench::Vench(QWidget* parent, QString kat, QString prt, bool isBluetoothMode, int fKon, QString nf):QDialog( parent,Qt::Window|Qt::WindowSystemMenuHint|Qt::WindowMinMaxButtonsHint|Qt::WindowCloseButtonHint),
-    ui(new Ui::Vench)
+Vench::Vench(QString kat, QString prt, bool isBluetoothMode, int fKon, QString nf, QObject* parent)
+    :QObject(parent)
 {
     fl_bluetooth = isBluetoothMode;
     fl_allDevices = false;
@@ -163,7 +162,6 @@ Vench::Vench(QWidget* parent, QString kat, QString prt, bool isBluetoothMode, in
     fl_kat = 0;
     fl_port_s = 0;
 
-    ui->setupUi(this);
     mSleep(100);
 
     timer = new QTimer(this);
@@ -259,7 +257,6 @@ int Vench::COMClose()
 Vench::~Vench()
 {
     COMClose();
-    destroy();
 }
 
 double Vench::GetTime()
@@ -269,12 +266,12 @@ double Vench::GetTime()
 
 void Vench::SpVibr()
 {
-    int k = listV->count();
+    /*int k = listV->count();
     if (k > 0)
-        checkVibrUst->setChecked(true);
+        checkVibrUst->setChecked(true);*/
     int fl_izmm = 0;
     fl_vibr_ust = 0;
-    for(int i = 0; i < k; ++i)
+    /*for(int i = 0; i < k; ++i)
     {
         if (listV->item(i)->isSelected())
         {
@@ -298,21 +295,21 @@ void Vench::SpVibr()
             mas_vibr_ust[i] = 0;
             act_ust[i].vibr_sp = 0;
         }
-    }
+    }*/
     if (fl_izmm == 1)
         fl_obn_spact = 4;
 }
 
 void Vench::SpVibr_n()
 {
-    int k = ui->listV_n->count();
+    /*int k = ui->listV_n->count();
     if (k > 0)
-        checkVibrUst->setChecked(true);
+        checkVibrUst->setChecked(true);*/
     int fl_izmm = 0;
     fl_vibr_ust = 0;
-    for(int i = 0; i < k; ++i)
+    /*for(int i = 0; i < k; ++i)
     {
-        if (ui->listV_n->item(i)->isSelected())
+        if (ui->listV_n->item(i)->isSelected()true)
         {
             if (act_ust[i].fl_antisleep != 2)
                 continue;
@@ -334,7 +331,7 @@ void Vench::SpVibr_n()
             mas_vibr_ust[i] = 0;
             act_ust[i].vibr_sp = 0;
         }
-    }
+    }*/
     if (fl_izmm==1)
         fl_obn_spact = 4;
 }
@@ -343,10 +340,10 @@ void Vench::ClearSpBeg()
 {
     if(fl_begin == 1)
     {
-        if (ui->BCar_1)
+       /* if (ui->BCar_1)
             ui->BCar_1->setEnabled(false);
         if (ui->BCar_2)
-            ui->BCar_2->setEnabled(false);
+            ui->BCar_2->setEnabled(false);*/
     }
 }
 
@@ -359,7 +356,6 @@ void Vench::ProcessTimer()
         ProgramClicked();
         disconnect (timer, SIGNAL(timeout()), this, SLOT(ProcessTimer()));
         COMClose();
-        this->done(0);
         qDebug() << "program done";
     }
 
@@ -807,23 +803,26 @@ bool Vench::BPressRec(int listCount)
         }
         else
         {
-            QMessageBox::information(this, trUtf8("Предупреждение"),
+            /*!!!!
+             * QMessageBox::information(this, trUtf8("Предупреждение"),
                                      trUtf8("Нет активных устройств\n"),
-                                     trUtf8("Ok") );
+                                     trUtf8("Ok") );*/
             return false;
         }
     if (mkl > 1)
     {
-        QMessageBox::information(this, trUtf8("Предупреждение"),
+        /*!!!!
+         *QMessageBox::information(this, trUtf8("Предупреждение"),
                                  trUtf8("Для записи программы выберите только одно устройство\n"),
-                                 trUtf8("Ok") );
+                                 trUtf8("Ok") );*/
         return false;
     }
     if (fl_allDevices)
     {
-        QMessageBox::information(this, trUtf8("Предупреждение"),
+        /*!!!!
+         *QMessageBox::information(this, trUtf8("Предупреждение"),
                                  trUtf8("Снимите признак \"Все устройства\" \n"),
-                                 trUtf8("Ok") );
+                                 trUtf8("Ok") );*/
         return false;
     }
 
@@ -918,7 +917,7 @@ void Vench::SendCommLight1()
 
     int mk[10];
 
-    if (!fl_allDevices && checkVibrUst->isChecked())
+    if (!fl_allDevices)
     {
         int numu = listV->count();
         for(int j = 0; j < numu; ++j)
@@ -997,7 +996,7 @@ void Vench::SendCommStopLight1()
     }
 
     int mk[10];
-    if (!fl_allDevices && checkVibrUst->isChecked())
+    if (!fl_allDevices )
     {
         int numu = listV->count();
         for(int j = 0; j < numu; ++j)
@@ -1056,7 +1055,7 @@ void Vench::SendCommBip1()
     }
 
     int mk[10];
-    if (!fl_allDevices && checkVibrUst->isChecked())
+    if (!fl_allDevices )
     {
         int numu = listV->count();
         for(int j =0 ; j < numu; ++j)
@@ -1127,7 +1126,7 @@ void Vench::SendCommStopBip1()
         return;
     }
     int mk[10];
-    if (!fl_allDevices && checkVibrUst->isChecked())
+    if (!fl_allDevices)
     {
         int numu = listV->count();
         for(int j = 0; j < numu; ++j)
@@ -1275,7 +1274,7 @@ void Vench::SendCommTempOn()
         return;
 
     int mk[20];
-    if (!fl_allDevices && checkVibrUst->isChecked())
+    if (!fl_allDevices )
     {
         int numu = listV->count();
         for(int j = 0; j < numu; ++j)
@@ -1315,7 +1314,7 @@ void Vench::SendCommTempOff()
     if (SpActDatch->count() == 0)
         return;
     int mk[20];
-    if (!fl_allDevices && checkVibrUst->isChecked())
+    if (!fl_allDevices)
     {
         int numu = listV->count();
         for(int j = 0; j < numu; ++j)
@@ -1358,7 +1357,7 @@ void Vench::SendCommBarOn()
         return;
     }
     int mk[10];
-    if (!fl_allDevices && checkVibrUst->isChecked())
+    if (!fl_allDevices )
     {
         int numu = listV->count();
         for(int j = 0; j < numu; ++j)
@@ -1400,7 +1399,7 @@ void Vench::SendCommEnergOn()
     if (SpActDatch->count() == 0)
         return;
     int mk[20];
-    if (!fl_allDevices && checkVibrUst->isChecked())
+    if (!fl_allDevices )
     {
         int numu = listV->count();
         for(int j = 0; j < numu; ++j)
@@ -1440,7 +1439,7 @@ void Vench::SendCommEnergOff()
     if (SpActDatch->count() == 0)
         return;
     int mk[20];
-    if (!fl_allDevices && checkVibrUst->isChecked())
+    if (!fl_allDevices )
     {
         int numu = listV->count();
         for(int j = 0; j < numu; ++j)
@@ -1508,209 +1507,6 @@ void Vench::SendCommObnovit()
 {
     SendComm("& 0 1 ff ff");
 }
-
-
-void Vench::keyPressEvent( QKeyEvent *e )
-{
-    int k = e->key();
-    if (tabWidget2->currentIndex() != 0)
-        return;
-
-    if ((fl_begin == 1) && (fl_vibr_ust == 0)) // chtoby ne srabativalo v nachalnem regime pri nevibrannih ustr-h
-        return;
-
-    // up    - 4115
-    // down  - 4117
-    // left  - 4114
-    // right - 4116
-    // shift - 4128
-    if (e->isAutoRepeat())
-        return;
-
-    switch(k)
-    {
-    case 77://m
-        SendCommBudil();
-        BAntiSleep->setDown(1);
-        break;
-    case 80://p
-        if (fl_play == 0)
-        {
-            fl_play = 1;
-        }
-        BPlay->setDown(1);
-        break;
-    case 82://r
-        if (fl_play == 1)
-            fl_play = 0;
-        BPlay->setDown(0);
-        BRec->setDown(1);
-        if (fl_rec == 0)
-        {
-          numc = 0;
-          num_comm = 0;
-          fl_rec = 1;
-        }
-        break;
-    case 87://up
-        if (fl_bluetooth)
-        {
-            on_BUp_B_pressed();
-            break;
-        }
-        BUp->setDown(1);
-        if (fl_play)
-            break;
-        if (kp == 1)
-            break;
-        kp = 1;
-        if (PressRh == 1)
-        {
-            PressRh = 0;
-            SendCommStop1();
-            PressRh = 1;
-        }
-        if (PressRv == 1)
-        {
-            PressRv = 0;
-            SendCommStop1();
-            PressRv = 1;
-        }
-        if (PressLf == 1)
-        {
-            PressLf = 0;
-            SendCommStop1();
-            PressLf = 1;
-        }
-        SbrosDatKas();
-        SendCommForw1();
-        PressFw = 1;
-        qDebug("Send klav comm Forw\n");
-        break;
-    case 83://down
-        if (fl_bluetooth)
-        {
-            qDebug("BT:down\n");
-            on_BDown_B_pressed();
-            break;
-        }
-        BDown->setDown(1);
-        if (fl_play)
-            break;
-        if (PressRh == 1)
-        {
-            PressRh = 0;
-            SendCommStop1();
-            PressRh = 1;
-        }
-        if (PressFw == 1)
-        {
-            PressFw = 0;
-            SendCommStop1();
-            PressFw = 1;
-        }
-        if (PressLf == 1)
-        {
-            PressLf = 0;
-            SendCommStop1();
-            PressLf = 1;
-        }
-        SbrosDatKas();
-        SendCommRevers1();
-        PressRv=1;
-        qDebug("Send klav comm revers\n");
-        break;
-    case 65://left
-        if (fl_bluetooth)
-        {
-            on_BLeft_B_pressed();
-            break;
-        }
-        BLeft->setDown(1);
-        if (fl_play)
-            break;
-        if (PressRh == 1)
-        {
-            PressRh = 0;
-            SendCommStop1();
-            PressRh=1;
-        }
-        if (PressFw == 1)
-        {
-            PressFw = 0;
-            SendCommStop1();
-            PressFw = 1;
-        }
-        if (PressRv == 1)
-        {
-            PressRv = 0;
-            SendCommStop1();
-            PressRv = 1;
-        }
-
-        SbrosDatKas();
-
-        if (shiftPress == 0)
-            SendCommLeft1();
-        if (shiftPress == 1)
-            SendCommExtrLeft1();
-        PressLf = 1;
-        qDebug("Send klav comm left\n");
-        break;
-    case 68:// right
-        BRight->setDown(1);
-        if (fl_bluetooth)
-        {
-            on_BRight_B_pressed();
-            break;
-        }
-        if (fl_play)
-            break;
-        if (PressRv == 1)
-        {
-            PressRv = 0;
-            SendCommStop1();
-            PressRv = 1;
-        }
-        if (PressFw == 1)
-        {
-            PressFw = 0;
-            SendCommStop1();
-            PressFw = 1;
-        }
-        if (PressLf == 1)
-        {
-            PressLf = 0;
-            SendCommStop1();
-            PressLf=1;
-        }
-        SbrosDatKas();
-        if (shiftPress == 0)
-            SendCommRight1();
-        if (shiftPress == 1)
-            SendCommExtrRight1();
-        PressRh = 1;
-        qDebug("Send klav comm right\n");
-        break;
-    case 16777248://shift
-        shiftPress = 1;
-        break;
-    case 32://probel
-        if (fl_play)
-            fl_play = 0;
-        SbrosDatKas();
-
-        BStop->setDown(1);
-        PressRh = 0;
-        PressLf = 0;
-        PressRv = 0;
-        PressFw = 0;
-        SendCommStop1();
-        qDebug("Send klav comm stop\n");
-        break;
-    }
-}
-
 
 void Vench::SetKatalog(QString kat)
 {
@@ -1874,7 +1670,8 @@ void Vench::init()
     {
         qDebug("Error open port Exit\n");
         QString st = trUtf8("Ошибка инициализации порта: ") + addr;
-        QMessageBox::information( this, trUtf8("Ошибка"), st, trUtf8("Ok") );
+        /*!!!!
+         *QMessageBox::information( this, trUtf8("Ошибка"), st, trUtf8("Ok") );*/
     }
 
     if (flcomport != 0)
@@ -1899,167 +1696,6 @@ void Vench::init()
 #endif
     fl_datKas = 0;
     mSleep(10);
-}
-
-
-void Vench::destroy()
-{
-    this->releaseKeyboard();
-}
-
-
-void Vench::keyReleaseEvent( QKeyEvent *e )
-{
-    int k;
-
-    k = e->key();
-    if (tabWidget2->currentIndex()!=0) return;
-    if (fl_begin==1) if (fl_vibr_ust==0) return;// chtoby ne srabativalo v nachalnem regime pri nevibrannih ustr-h
-
-// up-    4115
-//    down 4117
-    //left 4114
-    //right - 4116
-    // shift - 4128
-//    	printf("Kp1=%d\n",k);
-
-
-    if (e->isAutoRepeat()== true) return;
-
-    switch(k){
-
-    case 77://m
-   //   fl_rec=0;
-//      SendCommBudil();
-      BAntiSleep->setDown(0);
-      break;
-
-
-  case 80://p
-   //   fl_rec=0;
-      SendCommStopBip1();
-      if (fl_play==1)fl_play=0;
-      BPlay->setDown(0);
-      break;
-  case 82://
-      if (fl_rec) {
-        WriteProg1(num_comm);
-        fl_rec=0;
-    }
-      BRec->setDown(0);
-      break;
-
-//    case 16777235://up
-    case 87://up
-
-//	printf("Kp1=%d\n",kp);
-
-        if (fl_bluetooth){
-        SendCommStop_ave_BT();
-            break;
-        }
-
-    BUp->setDown(0);
-    if(fl_play)break;
-    if(fl_rec){
-        if (numc>(NUM_COMM-2)) break;
-        numc++;
-//	    break;
-    }
-
-    if (kp==0) break;
-    kp=0;
-    PressFw=0;
-
-    SendCommStop1();
-
-    break;
-//    case 16777237://down
-    case 83://down
-        if (fl_bluetooth){
-        SendCommStop_ave_BT();
-            break;
-        }
-
-
-    BDown->setDown(0);
-    if(fl_play)break;
-    if(fl_rec){
-        if (numc>(NUM_COMM-2)) break;
-        numc++;
-//	    break;
-    }
-    PressRv=0;
-    SendCommStop1();
-    break;
-//    case 16777234://left
-    case 65://left
-//	printf("terfdsvdcvc\n");
-        if (fl_bluetooth){
-        SendCommStop_ave_BT();
-            break;
-        }
-
-
-    BLeft->setDown(0);
-    if(fl_play)break;
-    if(fl_rec){
-        if (numc>(NUM_COMM-2)) break;
-        numc++;
-//	    printf("numc = %d\n",numc);
-//	    break;
-    }
-    PressLf=0;
-    SendCommStop1();
-    break;
-//    case 16777236:// right
-    case 68:// right
-        if (fl_bluetooth){
-        SendCommStop_ave_BT();
-            break;
-        }
-
-
-    BRight->setDown(0);
-    if(fl_play)break;
-    if(fl_rec){
-        if (numc>(NUM_COMM-2)) break;
-        numc++;
-//	    break;
-    }
-    PressRh=0;
-    SendCommStop1();
-    break;
-    case 16777248://shift
-        shiftPress = 0;
-    break;
-
-    case 32://probel
-        if (fl_bluetooth){
-        SendCommStop_ave_BT();
-            break;
-        }
-
-
-    BStop->setDown(0);
-    if(fl_play)fl_play=0;
-    if(fl_rec){
-        if (numc>(NUM_COMM-2)) break;
-        numc++;
-
-//	    break;
-    }
-    PressRh=0;
-    PressLf=0;
-    PressRv=0;
-    PressFw=0;
-    SendCommStop1();
-    break;
-
-    }
-
-
-
 }
 
 int Vench::GetNumbUst(int *mac)
@@ -2379,7 +2015,7 @@ void Vench::BPressSendEth()
     const char *mb;
     char ss[5];
     int len;
-    QString st   = TLEEthKgd->text()+" ";
+    QString st   = " ";
     len = 0;
     QByteArray rr =  st.toLocal8Bit();
     mb = rr.constData();
@@ -2415,16 +2051,16 @@ void Vench::BPressSendEthAT()
 
     QString st;
 
-    st = "AT*"+TLEEthKgdAT->text() +"="   ;
+    st = "AT* ="   ;
 
     QString st1,st2;
 
-    st2 = TLEEthKgdAT_CH->text();
+    st2;
     st1.setNum (st2.toInt(),10);//??????????? - moget 2
 //    qDebug ()<<st1;
     st = st+st1 + ",";
 
-    st2 = TLEEthKgdAT_CH2->text();
+    st2;
     st1.setNum (st2.toInt(),10);//
     qDebug ()<<st1;
     st = st+st1+"\n";
@@ -2437,7 +2073,7 @@ void Vench::grph(int pr, QString fileName)
     int mk[8];
     int numu = listV->count();
     int j = 0;
-    if (checkVibrUst->isChecked())
+    if (/*checkVibrUst->isChecked()*/true)
     {
         for(j = 0; j < numu; ++j)
             if (mas_vibr_ust[j] == 1)
@@ -2796,7 +2432,7 @@ void Vench::SendCommDimOff()
         return;
     }
 
-    if (!fl_allDevices && checkVibrUst->isChecked())
+    if (!fl_allDevices)
     {
         int numu = listV->count();
         for(int j = 0; j < numu; ++j)
@@ -2829,7 +2465,7 @@ void Vench::SendCommDimOn()
         return;
     }
 
-    if (!fl_allDevices && checkVibrUst->isChecked())
+    if (!fl_allDevices)
     {
         int numu = listV->count();
         for(int j = 0; j < numu; ++j)
@@ -2904,7 +2540,7 @@ void Vench::SendCommForw1()
     cm = "* 7E 0 11 10 11 ";
 #endif
 
-    if (!fl_allDevices && checkVibrUst->isChecked())
+    if (!fl_allDevices)
     {
         int numu = listV->count();
         for(int j = 0; j < numu; ++j)
@@ -2956,7 +2592,7 @@ void Vench::SendCommBudil()
        return;
    }
 
-   if (!fl_allDevices && checkVibrUst->isChecked())
+   if (!fl_allDevices)
    {
        numu = listV->count();
        for(int j = 0; j < numu; ++j)
@@ -3011,7 +2647,7 @@ void Vench::SendCommStop1()
     qDebug("Net active ustr\n");
     return;//если список пуст
     }
-    if (!fl_allDevices &&(checkVibrUst->isChecked() ==  true)){
+    if (!fl_allDevices){
 
         numu = listV->count();
 
@@ -3097,7 +2733,7 @@ void Vench::SendCommLeft1()
     return;//если список пуст
     }
 
-    if (!fl_allDevices &&(checkVibrUst->isChecked() ==  true)){
+    if (!fl_allDevices){
 
         numu = listV->count();
 
@@ -3342,7 +2978,7 @@ void Vench::SendCommRight1()
     return;//если список пуст
     }
 
-    if (!fl_allDevices &&(checkVibrUst->isChecked() ==  true)){
+    if (!fl_allDevices){
 
         numu = listV->count();
 
@@ -3586,7 +3222,7 @@ void Vench::SendCommExtrLeft1()
     return;//если список пуст
     }
 
-    if (!fl_allDevices &&(checkVibrUst->isChecked() ==  true)){
+    if (!fl_allDevices){
 
         numu = listV->count();
 
@@ -3815,7 +3451,7 @@ void Vench::SendCommExtrRight1()
     return;//если список пуст
     }
 
-    if (!fl_allDevices &&(checkVibrUst->isChecked() ==  true)){
+    if (!fl_allDevices){
 
         numu = listV->count();
 
@@ -4045,7 +3681,7 @@ void Vench::SendCommRevers1()
     return;//если список пуст
     }
 
-    if (!fl_allDevices &&(checkVibrUst->isChecked() ==  true)){
+    if (!fl_allDevices){
 
         numu = listV->count();
 
@@ -8288,8 +7924,7 @@ void Vench::on_listV_itemSelectionChanged()
     QListWidgetItem *itm;
 //        qDebug()<<"TTTT0";
 
-    k = ui->listV->count();
-    for(i=0;i<k;i++){
+    /*for(i=0;i<k;i++){
         itm = ui->listV->item(i);
         if (itm->isSelected()== true){
             listV->setCurrentRow(i,QItemSelectionModel::Select);
@@ -8297,7 +7932,7 @@ void Vench::on_listV_itemSelectionChanged()
         else{
             listV->setCurrentRow(i,QItemSelectionModel::Deselect);
         }
-    }
+    }*/
 }
 
 void Vench::BRec_pressed_n()
@@ -8392,13 +8027,11 @@ void Vench::RezultClicked()
 
 void Vench::on_pBTemp_E_clicked()
 {
-    fl_energ = ui->pBTemp_E->isChecked();
     BPressEnerg();
 }
 
 void Vench::on_pBTemp_D_clicked()
 {
-    fl_dim = ui->pBTemp_D->isChecked();
     BPressDim();
 }
 
@@ -8597,10 +8230,11 @@ void Vench::RuchnComm(QString text)
         SendCommForRS(text.toLocal8Bit().constData());
 
 
-    QMessageBox::information( this,
+    /*!!!!
+     *QMessageBox::information( this,
                               trUtf8("Информация"),
                               trUtf8("Команда отправлена на выполнение\n"),
-                              trUtf8("Ok") );
+                              trUtf8("Ok") );*/
 #ifdef PRINT_DEBUG
     qDebug("Send comm Ruchn vvod\n");
 #endif
