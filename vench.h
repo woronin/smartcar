@@ -402,7 +402,6 @@ public slots:
     
     virtual void SpVibr();
     virtual void SpVibr_n();
-    virtual void ProcessTimer();
     virtual void ClearSpBeg();
 
     int mSleep(int zd);
