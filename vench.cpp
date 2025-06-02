@@ -865,12 +865,8 @@ void Vench::BPressPlay()
 {
     if(fl_play == 0)
     {
-        if (fl_xml)
-            ReadProg1();
-        else
-            ReadCum();
+        ReadProg1();
 
-        //BRec->setDown(0);
         fl_rec = 0;
         fl_play = 1;
 
@@ -4299,14 +4295,7 @@ void Vench::WriteProg1( int k )
 
 void Vench::ReadProg1()
 {
-    QString fnamec = serverDir;
-#ifdef LINUX_D
-    fnamec += f_name_xml;
-#endif
-#ifdef WIN_D
-    fnamec = f_name_xml;
-#endif
-
+    QString fnamec = serverDir + f_name_xml;
     QFile f(fnamec);
     QDomDocument doc;
     if (!doc.setContent(&f,  true))
@@ -4346,6 +4335,7 @@ void Vench::ReadProg1()
         }
         num_comm = i;
     }
+
 }
 
 bool Vench::readIniLine(QTextStream& tt, QString& t, QString debug_message)
