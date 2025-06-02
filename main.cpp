@@ -14,7 +14,6 @@
 int main( int argc, char ** argv )
 {
     QApplication a( argc, argv );
-    bool isBluetoothMode = false;
     int flKonsol = 0;
 
     QString name_file;
@@ -28,12 +27,6 @@ int main( int argc, char ** argv )
         QString arg1 = argv[i];
         ++i;
 
-        if (arg1 == "-b")
-        {
-            printf("BlueTooth Mode\n");
-            isBluetoothMode = true;
-        }
-
         if (arg1 == "-k")
             if (i < argc)
             {
@@ -41,8 +34,6 @@ int main( int argc, char ** argv )
                 ++i;
             } else
                 printf("ERROR: katalog\n");
-
-
 
         if (arg1 == "-d")
             if (i < argc)
@@ -72,8 +63,7 @@ int main( int argc, char ** argv )
         }
     }
 
-    //Vench *w = new Vench(0, katalog, port_s, isBluetoothMode, flKonsol, name_file);
-    MainWindow *w = new MainWindow(katalog, port_s, isBluetoothMode, flKonsol, name_file);
+    MainWindow *w = new MainWindow(katalog, port_s, true, flKonsol, name_file);
     if (!flKonsol) w->show();
 
     a.connect( &a, SIGNAL( lastWindowClosed() ), &a, SLOT( quit() ) );

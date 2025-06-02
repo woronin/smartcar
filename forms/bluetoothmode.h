@@ -2,14 +2,13 @@
 #define BLUETOOTHMODE_H
 
 #include <QWidget>
-#include "worklogicalmodul.h"
 #include "vench.h"
 
 namespace Ui {
 class BluetoothMode;
 }
 
-class BluetoothMode : public WorkLogicalModul
+class BluetoothMode : public QWidget
 {
     Q_OBJECT
 
@@ -22,12 +21,12 @@ protected slots:
     void ChangeVenchXMLFlag();
     void RecClicked();
     void PlayClicked();
-
-    virtual void LStatusChanged();
+    void OpenGuidDoc();
+    void LStatusChanged();
 
 private:
     Ui::BluetoothMode *ui;
-
+    Vench *m_vench;
     bool fl_rec;
     bool fl_play;
 };
