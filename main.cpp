@@ -41,7 +41,7 @@ int main( int argc, char ** argv )
                 printf("ERROR:port\n");
     }
 
-    MainWindow *w = new MainWindow(katalog, port_s, true);
+    MainWindow *w = new MainWindow(katalog, port_s);
     w->show();
 
     a.connect( &a, SIGNAL( lastWindowClosed() ), &a, SLOT( quit() ) );

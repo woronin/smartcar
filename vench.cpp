@@ -147,10 +147,9 @@ void Vench::DatKas(Dat dat) //0 - right 1 - left
     emit DatChanged(dat);
 }
 
-Vench::Vench(QString kat, QString prt, bool isBluetoothMode, QObject* parent)
+Vench::Vench(QString kat, QString prt, QObject* parent)
     :QObject(parent)
 {
-    fl_bluetooth = isBluetoothMode;
     fl_allDevices = false;
     fl_diskr = true;
     fl_unsleep = false;
@@ -1357,9 +1356,7 @@ void Vench::init()
     tm_usleep_com = 500;
     imp_diskr = 12;
     addr_win = "COM3";
-    fl_begin = 2;
-    if (fl_bluetooth)
-        fl_begin = 4;
+    fl_begin = 4;
     ReadIni();
 
     mSleep(100);//00000000
@@ -1386,13 +1383,6 @@ void Vench::init()
     mSleep(3);
     thrRS = new MyThread (TestPotoc, this);
     thrRS->start();
-
-    if (!fl_bluetooth)
-    {
-        SendVklAPI();
-        SendVklNP();
-        SendZaprosI();
-    }
     ReadProg1();
 
 #ifdef LINUX_D
@@ -2075,58 +2065,6 @@ void Vench::BPressBar()
     emit RegGrphTextChanged(getTextReg());
 }
 
-
-int Vench::SetAnswerUstr(int imp1, int imp2,int nD)
-{
-    if (fl_rec && !fl_bluetooth)
-    {
-        if (num_comm < NUM_COMM)
-        {
-            if (!fl_diskr)
-            {
-                mass_comm_n[num_comm][0] = imp1;
-                mass_comm_n[num_comm][1] = imp2;
-                if (nD!=0)
-                {
-                    mass_comm_n[num_comm][2] = nD;
-                    ++num_comm;
-                }
-            }
-            else
-            {
-                if (nD == 0)
-                {
-                    if ((imp1 - rimp1) > 0)
-                        mass_comm_n[num_comm][0] = imp1 - rimp1;
-                    else
-                        mass_comm_n[num_comm][0] = rimp1 - imp1;
-                    if ((imp2 - rimp2) > 0)
-                        mass_comm_n[num_comm][1] = imp2 - rimp2;
-                    else
-                        mass_comm_n[num_comm][1] = rimp2 - imp2;
-                    mass_comm_n[num_comm][2] = ret_napr;
-                    if ((imp1 != rimp1) && (imp2 != rimp2))
-                        ++num_comm;
-                    rimp1 = imp1;
-                    rimp2 = imp2;
-                }
-                else
-                {
-                    ret_napr = nD;
-                    rimp1 = imp1;
-                    rimp2 = imp2;
-                }
-            }
-        }
-        else
-        {
-            printf("ERROR chislo comand ogran!!!\n");
-            return 0;
-        }
-    }
-    return 1;
-}
-
 void Vench::SendCommDimOff()
 {
     unsigned char mkc[10];
@@ -2224,8 +2162,6 @@ QString Vench::BaseOfCommForw1(QString cm, int mk[10])
              int impr, impl;
              GetKolImpUstr(mk, &impr, &impl);
              cm = cm + QString().setNum(impr, 16) + " " + QString().setNum(impl, 16) + " A";
-             if (fl_rec == 1)
-                 SetAnswerUstr(impr, impl, 0xa);
          }
      }
 }
@@ -2501,7 +2437,6 @@ void Vench::SendCommLeft1()
         ss.setNum(impl,16);
         cm = cm+ss+" 8";
         //end 26_10_13 chtobi dla kagdoi mashinki
-            if (fl_rec==1) SetAnswerUstr(impr, impl,0x8);
         }
         //    printf(cm);
 
@@ -2657,7 +2592,6 @@ void Vench::SendCommLeft1()
         ss.setNum(impl,16);
         cm = cm+ss+" 8";
         //end 26_10_13 chtobi dla kagdoi mashinki
-            if (fl_rec==1) SetAnswerUstr(impr, impl,0x8);
         }
 
 
@@ -2747,7 +2681,6 @@ void Vench::SendCommRight1()
         ss.setNum(impl,16);
         cm = cm+ss+" 2";
         //end 26_10_13 chtobi dla kagdoi mashinki
-            if (fl_rec==1) SetAnswerUstr(impr, impl,0x2);
         }
 
 
@@ -2902,7 +2835,6 @@ void Vench::SendCommRight1()
         ss.setNum(impl,16);
         cm = cm+ss+" 2";
         //end 26_10_13 chtobi dla kagdoi mashinki
-            if (fl_rec==1) SetAnswerUstr(impr, impl,0x2);
         }
 
     //    printf(cm);
@@ -2989,7 +2921,6 @@ void Vench::SendCommExtrLeft1()
         ss.setNum(impl,16);
         cm = cm+ss+" 9";
         //end 26_10_13 chtobi dla kagdoi mashinki
-            if (fl_rec==1) SetAnswerUstr(impr, impl,0x9);
         }
 
         //    printf(cm);
@@ -3131,7 +3062,6 @@ void Vench::SendCommExtrLeft1()
         ss.setNum(impl,16);
         cm = cm+ss+" 9";
         //end 26_10_13 chtobi dla kagdoi mashinki
-            if (fl_rec==1) SetAnswerUstr(impr, impl,0x9);
         }
 
     //    printf(cm);
@@ -3216,7 +3146,6 @@ void Vench::SendCommExtrRight1()
         ss.setNum(impl,16);
         cm = cm+ss+" 6";
         //end 26_10_13 chtobi dla kagdoi mashinki
-            if (fl_rec==1) SetAnswerUstr(impr, impl,0x6);
         }
 
         //    printf(cm);
@@ -3361,7 +3290,6 @@ void Vench::SendCommExtrRight1()
         ss.setNum(impl,16);
         cm = cm+ss+" 6";
         //end 26_10_13 chtobi dla kagdoi mashinki
-            if (fl_rec==1) SetAnswerUstr(impr, impl,0x6);
         }
 
     //    printf(cm);
@@ -3447,7 +3375,6 @@ void Vench::SendCommRevers1()
         ss.setNum(impl,16);
         cm = cm+ss+" 5";
         //end 26_10_13 chtobi dla kagdoi mashinki
-            if (fl_rec==1) SetAnswerUstr(impr, impl,0x5);
         }
 
         //   	 printf(cm);
@@ -3594,7 +3521,6 @@ void Vench::SendCommRevers1()
         ss.setNum(impl,16);
         cm = cm+ss+" 5";
         //end 26_10_13 chtobi dla kagdoi mashinki
-            if (fl_rec==1) SetAnswerUstr(impr, impl,0x5);
         }
 
     //    printf(cm);
@@ -3815,19 +3741,7 @@ void Vench::ReadIni()
 
     if (!readIniLine(tt, t, "fomat prog:"))
         return;
-    if (fl_bluetooth)
-        fl_begin = 4;
-    else
-    {
-        if (t == "START")
-            fl_begin = 1;
-        else if (t == "SUPER")
-            fl_begin = 3;
-        else if (t == "SUPER_N")
-            fl_begin = 0;
-        else if (t == "BASE")
-            fl_begin = 2;
-    }
+    fl_begin = 4;
 
     if (!readIniLine(tt, t, "read win\n"))
         return;
@@ -6582,8 +6496,6 @@ void  Vench::TestPotoc(void * param)
                     if (fl_sov == 1)
                     {
                         md->print_imp_sleep(md->pbuf_mac, md->imp1, md->imp2,md->napr, md->errte);
-                        if (!md->fl_diskr)
-                            md->SetAnswerUstr(md->imp1, md->imp2,md->napr);
                     }
                 }
 
@@ -7668,10 +7580,7 @@ void Vench::ProgrClicked()
 #ifdef LINUX_D
     QString ms = mEdit;
     QString fnamec = serverDir;
-    if (fl_bluetooth)
-        fnamec += f_name_snap;
-    else
-        fnamec += f_name_kum;
+    fnamec += f_name_snap;
 
     if (fl_xml)
         ms += serverDir + f_name_xml + " &";
@@ -7756,9 +7665,6 @@ void Vench::on_pBGraph_D_clicked()
 
 void Vench::SendCommBipBT()
 {
-    if (!fl_bluetooth)
-        return;
-
     unsigned char buf[10];
     buf[0] = 0x8e; //begin packet
     buf[1] = 0x7;  //command packet
@@ -7769,9 +7675,6 @@ void Vench::SendCommBipBT()
 
 void Vench::SendCommLightBT()
 {
-    if (!fl_bluetooth)
-        return;
-
     unsigned char buf[10];
     buf[0] = 0x8e; //begin packet
     buf[1] = 0xF;  //command packet
@@ -7782,9 +7685,6 @@ void Vench::SendCommLightBT()
 
 void Vench::SendCommForw_ave_BT()
 {
-    if (!fl_bluetooth)
-        return;
-
     unsigned char buf[10];
     buf[0] = 0x0;  //begin packet
     buf[1] = 0x0;  //command packet
@@ -7799,9 +7699,6 @@ void Vench::SendCommForw_ave_BT()
 
 void Vench::SendCommRevers_ave_BT()
 {
-    if (!fl_bluetooth)
-        return;
-
     unsigned char buf[10];
     buf[0] = 0x0;  //begin packet
     buf[1] = 0x0;  //command packet
@@ -7816,9 +7713,6 @@ void Vench::SendCommRevers_ave_BT()
 
 void Vench::SendCommLeft_ave_BT()
 {
-    if (!fl_bluetooth)
-        return;
-
     unsigned char buf[10];
     buf[0] = 0x0;  //begin packet
     buf[1] = 0x81; //command packet
@@ -7833,9 +7727,6 @@ void Vench::SendCommLeft_ave_BT()
 
 void Vench::SendCommRight_ave_BT()
 {
-    if (!fl_bluetooth)
-        return;
-
     unsigned char buf[10];
     buf[0] = 0x0;  //begin packet
     buf[1] = 0x7F; //command packet
@@ -7852,9 +7743,6 @@ void Vench::SendCommRight_ave_BT()
 
 void Vench::SendCommStop_ave_BT()
 {
-    if (!fl_bluetooth)
-        return;
-
     unsigned char buf[10];
     buf[0] = 0x0; //begin packet
     buf[1] = 0x0; //command packet
@@ -7906,33 +7794,25 @@ void Vench::on_BLight_B_clicked() // bluetooth mode
 void Vench::RuchnComm(QString text)
 {
     text = PrivodStroki(text);
-    if (fl_bluetooth)
-        text += " ";
+    text += " ";
 #ifdef PRINT_DEBUG
     qDebug() << text;
 #endif
-
-    if (fl_bluetooth)
+    unsigned char buf[1000];
+    int i = 0;
+    int l = text.indexOf(" ");
+    while((i < 999) && (l >= 0))
     {
-        unsigned char buf[1000];
-        int i = 0;
-        int l = text.indexOf(" ");
-        while((i < 999) && (l >= 0))
-        {
-            bool ok;
-            buf[i] = text.left(l).toInt(&ok, 16);
-            if (!ok)
-                --i;
-            text = text.right(text.length() - l - 1);
-            ++i;
-            l = text.indexOf(" ");
-        }
-
-        Write(com_port, buf, i);
+        bool ok;
+        buf[i] = text.left(l).toInt(&ok, 16);
+        if (!ok)
+            --i;
+        text = text.right(text.length() - l - 1);
+        ++i;
+        l = text.indexOf(" ");
     }
-    else
-        SendCommForRS(text.toLocal8Bit().constData());
 
+    Write(com_port, buf, i);
 
     /*!!!!
      *QMessageBox::information( this,

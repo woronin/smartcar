@@ -153,7 +153,7 @@ class Vench: public QObject
 Q_OBJECT
 public:
 
-    explicit Vench(QString kat, QString prt, bool isBluetoothMode, QObject* parent = nullptr);
+    explicit Vench(QString kat, QString prt, QObject* parent = nullptr);
 
  ~Vench();
 
@@ -177,8 +177,6 @@ public:
     void send_command(QString st);
 
     struct Spisoc_ust act_ust[100];
-
-    bool fl_bluetooth;
 
 	int fl_period_e;
 	double t_oprosa_e;
@@ -571,7 +569,6 @@ public slots:
     int SendCommStopKrd(unsigned char *MacSet);
     int TryGetKrdBegin(unsigned char *buf,int len);
     void SetActiveLog(unsigned char* mac_ad,unsigned char *mas_set);
-    int SetAnswerUstr(int imp1, int imp2,int nD);
 
     void SetHiddenCar(int i, int fl);
 
