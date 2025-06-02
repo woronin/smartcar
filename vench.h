@@ -153,7 +153,7 @@ class Vench: public QObject
 Q_OBJECT
 public:
 
-    explicit Vench(QString kat, QString prt, bool isBluetoothMode, int fKon, QString nf, QObject* parent = nullptr);
+    explicit Vench(QString kat, QString prt, bool isBluetoothMode, QObject* parent = nullptr);
 
  ~Vench();
 
@@ -643,8 +643,6 @@ protected:
     QTimer * timer;
     double timer_init_port;
 
-    QString name_file_console;
-    int flConsole;
     bool fl_print_log_B;
     QString serverDir;
 

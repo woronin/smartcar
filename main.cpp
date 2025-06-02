@@ -14,9 +14,6 @@
 int main( int argc, char ** argv )
 {
     QApplication a( argc, argv );
-    int flKonsol = 0;
-
-    QString name_file;
     QString katalog;
     QString port_s;
 
@@ -42,29 +39,10 @@ int main( int argc, char ** argv )
                 ++i;
             } else
                 printf("ERROR:port\n");
-
-        if (arg1 == "-f" || arg1 == "-F")
-        {
-            if (arg1 == "-f")
-                flKonsol = 1;
-            else
-                flKonsol = 2;
-
-            printf("Consol mode\n");
-
-            if (i < argc)
-            {
-                name_file = argv[i];
-
-                printf("file : %s\n",qPrintable(name_file));
-                ++i;
-            } else
-                printf("ERROR:file\n");
-        }
     }
 
-    MainWindow *w = new MainWindow(katalog, port_s, true, flKonsol, name_file);
-    if (!flKonsol) w->show();
+    MainWindow *w = new MainWindow(katalog, port_s, true);
+    w->show();
 
     a.connect( &a, SIGNAL( lastWindowClosed() ), &a, SLOT( quit() ) );
     return a.exec();

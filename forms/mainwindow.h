@@ -13,7 +13,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QString kat, QString prt, bool isBluetoothMode, int fKon, QString nf, QWidget *parent = nullptr);
+    explicit MainWindow(QString kat, QString prt, bool isBluetoothMode, QWidget *parent = nullptr);
     ~MainWindow();
 
 private:

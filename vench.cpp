@@ -147,7 +147,7 @@ void Vench::DatKas(Dat dat) //0 - right 1 - left
     emit DatChanged(dat);
 }
 
-Vench::Vench(QString kat, QString prt, bool isBluetoothMode, int fKon, QString nf, QObject* parent)
+Vench::Vench(QString kat, QString prt, bool isBluetoothMode, QObject* parent)
     :QObject(parent)
 {
     fl_bluetooth = isBluetoothMode;
@@ -181,9 +181,6 @@ Vench::Vench(QString kat, QString prt, bool isBluetoothMode, int fKon, QString n
     if (!prt.isEmpty())
         SetPort(prt);
     init();
-
-    flConsole = fKon;
-    name_file_console = nf;
 /*
     connect( BSendEth , SIGNAL( clicked() ), this, SLOT(BPressSendEth() ) );
     connect( BSendEthAT , SIGNAL( clicked() ), this, SLOT(BPressSendEthAT() ) );
@@ -349,16 +346,6 @@ void Vench::ClearSpBeg()
 
 void Vench::ProcessTimer()
 {
-    if (flConsole)
-    {
-        qDebug() << serverDir;
-        SetXMLFlag(true);
-        ProgramClicked();
-        disconnect (timer, SIGNAL(timeout()), this, SLOT(ProcessTimer()));
-        COMClose();
-        qDebug() << "program done";
-    }
-
     for(int i = 0; i < k_hid; ++i)
     {
         if (mas_fl_hid[i] != 2)
@@ -8415,13 +8402,6 @@ void Vench::ReadSnap(QString &txt)
     qDebug("read snap\n");
 
     QString fnamec = serverDir + f_name_snap;
-
-    if (flConsole)
-        fnamec = serverDir;
-    if (flConsole == 1)
-        fnamec += name_file_console;
-    if (flConsole == 2)
-        fnamec = name_file_console;
 
     qDebug() << "lll";
     qDebug() << fnamec;
