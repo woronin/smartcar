@@ -38,9 +38,6 @@ BluetoothMode::BluetoothMode(Vench *vench, QWidget *parent) :
     connect(ui->BRuchnComm, &QPushButton::clicked, this, &BluetoothMode::RuchnCommClicked);
     connect(ui->checkLog, &QCheckBox::clicked, m_vench, &Vench::on_checkLog_n_B_clicked);
 
-    connect(ui->BXML, &QRadioButton::clicked, this, &BluetoothMode::ChangeVenchXMLFlag);
-    connect(ui->BKumir, &QRadioButton::clicked, this, &BluetoothMode::ChangeVenchXMLFlag);
-    connect(ui->BPokazProgr, &QPushButton::clicked, m_vench, &Vench::ProgrClicked);
     connect(ui->BRec, &QPushButton::clicked, this, &BluetoothMode::RecClicked);
     connect(ui->BPlay, &QPushButton::clicked, this, &BluetoothMode::PlayClicked);
 }
@@ -48,11 +45,6 @@ BluetoothMode::BluetoothMode(Vench *vench, QWidget *parent) :
 void BluetoothMode::RuchnCommClicked()
 {
     m_vench->RuchnComm(ui->CommTextEdit->text());
-}
-
-void BluetoothMode::ChangeVenchXMLFlag()
-{
-    m_vench->SetXMLFlag(ui->BXML->isChecked());
 }
 
 void BluetoothMode::RecClicked()

@@ -18,7 +18,6 @@ public:
 
 protected slots:
     void RuchnCommClicked();
-    void ChangeVenchXMLFlag();
     void RecClicked();
     void PlayClicked();
     void OpenGuidDoc();
