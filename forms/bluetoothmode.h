@@ -21,7 +21,7 @@ protected slots:
     void RecClicked();
     void PlayClicked();
     void OpenGuidDoc();
-    void LStatusChanged();
+    void SetLStatus();
 
 private:
     Ui::BluetoothMode *ui;

@@ -25,7 +25,7 @@ QT += xml
 
 
 # Input
-HEADERS += channel.h define.h formview.h formzastav.h vench.h \
+HEADERS += channel.h define.h vench.h \
     forms/bluetoothmode.h \
     forms/mainwindow.h
 FORMS += \
@@ -34,8 +34,6 @@ FORMS += \
 SOURCES += channel.cpp \
     forms/bluetoothmode.cpp \
     forms/mainwindow.cpp \
-           formview.cpp \
-           formzastav.cpp \
            main.cpp \
            vench.cpp
 

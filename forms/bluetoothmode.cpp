@@ -16,8 +16,7 @@ BluetoothMode::BluetoothMode(Vench *vench, QWidget *parent) :
     fl_rec = false;
     fl_play = false;
 
-    LStatusChanged();
-    connect(m_vench, &Vench::AnsStatusChanged, this, &BluetoothMode::LStatusChanged);
+    SetLStatus();
 
     connect(ui->BHelp, &QPushButton::clicked, this, &BluetoothMode::OpenGuidDoc);
 
@@ -25,14 +24,14 @@ BluetoothMode::BluetoothMode(Vench *vench, QWidget *parent) :
     connect(ui->BLight, &QPushButton::clicked, m_vench, &Vench::on_BLight_B_clicked);
 
     connect(ui->BUp, &QPushButton::pressed,  m_vench, &Vench::on_BUp_B_pressed);
-    connect(ui->BUp, &QPushButton::released, m_vench, &Vench::SendCommStop_ave_BT);
+    connect(ui->BUp, &QPushButton::released, m_vench, &Vench::on_BStop_B_clicked);
     connect(ui->BLeft, &QPushButton::pressed,  m_vench, &Vench::on_BLeft_B_pressed);
-    connect(ui->BLeft, &QPushButton::released, m_vench, &Vench::SendCommStop_ave_BT);
+    connect(ui->BLeft, &QPushButton::released, m_vench, &Vench::on_BStop_B_clicked);
     connect(ui->BRight, &QPushButton::pressed,  m_vench, &Vench::on_BRight_B_pressed);
-    connect(ui->BRight, &QPushButton::released, m_vench, &Vench::SendCommStop_ave_BT);
+    connect(ui->BRight, &QPushButton::released, m_vench, &Vench::on_BStop_B_clicked);
     connect(ui->BDown, &QPushButton::pressed,  m_vench, &Vench::on_BDown_B_pressed);
-    connect(ui->BDown, &QPushButton::released, m_vench, &Vench::SendCommStop_ave_BT);
-    connect(ui->BStop, &QPushButton::pressed,  m_vench, &Vench::SendCommStop_ave_BT);
+    connect(ui->BDown, &QPushButton::released, m_vench, &Vench::on_BStop_B_clicked);
+    connect(ui->BStop, &QPushButton::pressed,  m_vench, &Vench::on_BStop_B_clicked);
 
     connect(ui->CommTextEdit, &QLineEdit::returnPressed, this, &BluetoothMode::RuchnCommClicked);
     connect(ui->BRuchnComm, &QPushButton::clicked, this, &BluetoothMode::RuchnCommClicked);
@@ -79,7 +78,7 @@ void BluetoothMode::PlayClicked()
     m_vench->BPressPlay();
 }
 
-void BluetoothMode::LStatusChanged()
+void BluetoothMode::SetLStatus()
 {
     ui->LStatus->setText(m_vench->AnsStatus());
     ui->LStatus->setStyleSheet("background: " + m_vench->AnsStatusColor().name());

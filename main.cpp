@@ -1,7 +1,6 @@
 #include <qapplication.h>
 #include <qnamespace.h>
 #include "vench.h"
-#include "formzastav.h"
 #include <unistd.h>
 #include <qsplashscreen.h>
 #include <qpixmap.h>
