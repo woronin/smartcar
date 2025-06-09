@@ -1,9 +1,7 @@
-#include <qapplication.h>
+#include<QApplication>
 #include <qnamespace.h>
 #include "vench.h"
 #include <unistd.h>
-#include <qsplashscreen.h>
-#include <qpixmap.h>
 #include <stdio.h>
 #include <QtCore>
 
