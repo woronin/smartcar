@@ -18,27 +18,6 @@
 class QSerialPort;
 #endif
 
-struct xml_command
-{
-public:
-    int imp1;
-    int imp2;
-    int napr;
-    xml_command(int _napr)
-    {
-        imp1 = 10;
-        imp2 = 10;
-        napr = _napr;
-    }
-
-    xml_command(int _imp1, int _imp2, int _napr)
-    {
-        imp1 = _imp1;
-        imp2 = _imp2;
-        napr = _napr;
-    }
-};
-
 enum Command
 {
     Up,
@@ -86,8 +65,9 @@ public:
     void RuchnComm(QString text);
 
 protected:
-    QList <xml_command> mass_comm_n;
-    int fl_play;
+    QList <int> mass_comm_n;
+    bool fl_play;
+    bool fl_playLoop;
     int fl_rec;
     int fl_kat;
     int fl_port_s;
@@ -125,8 +105,12 @@ protected:
 
     void DoCommand(Command com);
 
+protected slots:
+    void SendProgramCommand();
+
 public slots:
     void on_checkLog_n_B_clicked(bool checked);
+    void on_checkCicl_n_B_clicked(bool checked);
     void on_BUp_B_pressed();
     void on_BDown_B_pressed();
     void on_BLeft_B_pressed();
@@ -134,6 +118,9 @@ public slots:
     void on_BBip_B_clicked();
     void on_BLight_B_clicked();
     void on_BStop_B_clicked();
+
+signals:
+    void playDone();
 };
 
 #endif

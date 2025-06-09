@@ -67,7 +67,8 @@ void Vench::init()
 
     mSleep(100);
     fl_rec = 0;
-    fl_play = 0;
+    fl_play = false;
+    fl_playLoop = false;
     mass_comm_n.clear();
 
     qDebug("ustroistvo vvoda-vivoda:  %s\n", addr.toLocal8Bit().constData()); // smotrim kakoe ustroistvo otkrilos
@@ -122,29 +123,43 @@ int Vench::COMClose()
 
 void Vench::BPressPlay()
 {
-    if(fl_play == 0)
+    if(!fl_play)
     {
         ReadProg1();
         fl_rec = 0;
-        fl_play = 1;
-
-        for(int uu = 0; uu < mass_comm_n.count(); ++uu)
-        {
-            xml_command xml_c = mass_comm_n.at(uu);
-#ifdef PRINT_DEBUG
-            qDebug("m1 =%d\n", xml_c.imp1);
-            qDebug("m2 =%d\n", xml_c.imp2);
-            qDebug("m3 =%d\n", xml_c.napr);
-#endif
-            DoCommand(CommandsCode.key(xml_c.napr, None));
-            mSleep(1000);
-        }
+        fl_play = true;
+        SendProgramCommand();
     }
     else
     {
-        fl_play = 0;
-         on_BStop_B_clicked();
+        fl_play = false;
+        on_BStop_B_clicked();
     }
+}
+
+void Vench::SendProgramCommand()
+{
+    if (mass_comm_n.count() > 0)
+    {
+        int com = mass_comm_n.first();
+        mass_comm_n.removeFirst();
+        if (fl_playLoop)
+            mass_comm_n.push_back(com);
+#ifdef PRINT_DEBUG
+        qDebug("m3 =%d\n", com);
+#endif
+        if(fl_play)
+        {
+            DoCommand(Stop);
+            mSleep(500);
+            DoCommand(CommandsCode.key(com, None));
+            QTimer::singleShot(500, this, SLOT(SendProgramCommand()));
+        }
+        else
+            return;
+    }
+    else
+        emit playDone();
 }
 
 void Vench::SetKatalog(QString kat)
@@ -167,10 +182,7 @@ void Vench::WriteProg1( int k )
     for(int i = 0; i < k; ++i)
     {
         QDomElement node1 = md.createElement("pole");
-        xml_command xml_c = mass_comm_n.at(i);
-        node1.setAttribute("imp1", QString().setNum(xml_c.imp1, 10));
-        node1.setAttribute("imp2", QString().setNum(xml_c.imp2, 10));
-        node1.setAttribute("napr", QString().setNum(xml_c.napr, 16));
+        node1.setAttribute("napr", QString().setNum(mass_comm_n.at(i), 16));
         node.appendChild(node1);
     }
     root.appendChild(node);
@@ -219,12 +231,7 @@ void Vench::ReadProg1()
         while(!node1.isNull())
         {
             if (node1.toElement().tagName() == "pole")
-            {
-                xml_command xml_c(node1.toElement().attribute("imp1").toInt(),
-                                  node1.toElement().attribute("imp2").toInt(),
-                                  node1.toElement().attribute("napr").toInt(nullptr, 16));
-                mass_comm_n.append(xml_c);
-            }
+                mass_comm_n.append(node1.toElement().attribute("napr").toInt(nullptr, 16));
             node1 = node1.nextSibling();
         }
     }
@@ -440,7 +447,6 @@ int Vench::COMInit(const char* port)
 
 int Vench::Write(int port, QList<int> bt_com)
 {
-    qWarning() << bt_com;
     int len = bt_com.count();
     unsigned char buf[10];
     for (int i = 0; i < len; ++i)
@@ -560,9 +566,8 @@ void Vench::BRec_pressed_n()
 
 void Vench::DoCommand(Command com)
 {
-    qWarning() << com;
     if (fl_rec && CommandsCode.contains(com))
-        mass_comm_n.append(xml_command(CommandsCode.value(com)));
+        mass_comm_n.append(CommandsCode.value(com));
 
     if (BluetoothCommands.contains(com))
         Write(com_port, BluetoothCommands.value(com));
@@ -607,6 +612,11 @@ void Vench::on_BRight_B_pressed()
 void Vench::on_checkLog_n_B_clicked(bool checked)
 {
     fl_print_log = checked;
+}
+
+void Vench::on_checkCicl_n_B_clicked(bool checked)
+{
+    fl_playLoop = checked;
 }
 
 void Vench::RuchnComm(QString text)
