@@ -148,9 +148,9 @@ void Vench::SendProgramCommand()
 #ifdef PRINT_DEBUG
         qDebug("m3 =%d\n", com);
 #endif
+        DoCommand(Stop);
         if(fl_play)
         {
-            DoCommand(Stop);
             mSleep(500);
             DoCommand(CommandsCode.key(com, None));
             QTimer::singleShot(500, this, SLOT(SendProgramCommand()));

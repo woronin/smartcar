@@ -5,6 +5,7 @@
 #include <QDesktopServices>
 #include <QCoreApplication>
 #include <QUrl>
+#include <QKeyEvent>
 
 BluetoothMode::BluetoothMode(Vench *vench, QWidget *parent) :
     QWidget(parent),
@@ -12,6 +13,7 @@ BluetoothMode::BluetoothMode(Vench *vench, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setFocusPolicy(Qt::StrongFocus);
     m_vench = vench;
     fl_rec = false;
     fl_play = false;
@@ -41,6 +43,55 @@ BluetoothMode::BluetoothMode(Vench *vench, QWidget *parent) :
     connect(ui->BRec, &QPushButton::clicked, this, &BluetoothMode::RecClicked);
     connect(ui->BPlay, &QPushButton::clicked, this, &BluetoothMode::PlayClicked);
     connect(m_vench, &Vench::playDone, this, &BluetoothMode::PlayClicked);
+
+}
+
+void BluetoothMode::keyPressEvent(QKeyEvent *event)
+{
+    if (event->isAutoRepeat())
+        return;
+    switch (event->key())
+    {
+    case Qt::Key_W:
+        m_vench->on_BUp_B_pressed();
+        break;
+    case Qt::Key_A:
+        m_vench->on_BLeft_B_pressed();
+        break;
+    case Qt::Key_S:
+        m_vench->on_BDown_B_pressed();
+        break;
+    case Qt::Key_D:
+        m_vench->on_BRight_B_pressed();
+        break;
+    case Qt::Key_B:
+        m_vench->on_BBip_B_clicked();
+        break;
+    case Qt::Key_L:
+        m_vench->on_BLight_B_clicked();
+        break;
+    case Qt::Key_Space:
+        m_vench->on_BStop_B_clicked();
+        break;
+    case Qt::Key_R:
+        RecClicked();
+        break;
+    case Qt::Key_P:
+        PlayClicked();
+        break;
+    default:
+        QWidget::keyPressEvent(event);
+    }
+}
+
+void BluetoothMode::keyReleaseEvent(QKeyEvent *event)
+{
+    if (event->isAutoRepeat())
+        return;
+    int key = event->key();
+    if (key == Qt::Key_W || key == Qt::Key_A || key == Qt::Key_S || key == Qt::Key_D)
+        m_vench->on_BStop_B_clicked();
+
 }
 
 void BluetoothMode::RuchnCommClicked()

@@ -16,6 +16,10 @@ public:
     explicit BluetoothMode(Vench *vench, QWidget *parent = nullptr);
     ~BluetoothMode();
 
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
+
 protected slots:
     void RuchnCommClicked();
     void RecClicked();
