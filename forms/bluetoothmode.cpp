@@ -6,6 +6,7 @@
 #include <QCoreApplication>
 #include <QUrl>
 #include <QKeyEvent>
+#include <QShortcut>
 
 BluetoothMode::BluetoothMode(Vench *vench, QWidget *parent) :
     QWidget(parent),
@@ -19,6 +20,15 @@ BluetoothMode::BluetoothMode(Vench *vench, QWidget *parent) :
     fl_play = false;
 
     SetLStatus();
+
+    // -------- Set Shortcuts (Hot keys) -------- //
+    (new QShortcut(QKeySequence(Qt::Key_B), this, [this](){ m_vench->on_BBip_B_clicked(); }))->setAutoRepeat(false);
+    (new QShortcut(QKeySequence(Qt::Key_L), this, [this](){ m_vench->on_BLight_B_clicked(); }))->setAutoRepeat(false);
+    (new QShortcut(QKeySequence(Qt::Key_Space), this, [this](){ m_vench->on_BStop_B_clicked(); }))->setAutoRepeat(false);
+    (new QShortcut(QKeySequence(Qt::Key_R), this, SLOT(RecClicked())))->setAutoRepeat(false);
+    (new QShortcut(QKeySequence(Qt::Key_P), this, SLOT(PlayClicked())))->setAutoRepeat(false);
+    (new QShortcut(QKeySequence(Qt::Key_H), this, SLOT(OpenGuidDoc())))->setAutoRepeat(false);
+    //--------------------------------------------//
 
     connect(ui->BHelp, &QPushButton::clicked, this, &BluetoothMode::OpenGuidDoc);
 
@@ -50,48 +60,29 @@ void BluetoothMode::keyPressEvent(QKeyEvent *event)
 {
     if (event->isAutoRepeat())
         return;
-    switch (event->key())
-    {
-    case Qt::Key_W:
+
+    int key = event->key();
+    if ( key == Qt::Key_W || key == 1062)     // Клавиша W (код "Ц" - 1062)
         m_vench->on_BUp_B_pressed();
-        break;
-    case Qt::Key_A:
+    else if (key == Qt::Key_A || key == 1060) // Клавиша A (код "Ф" - 1060)
         m_vench->on_BLeft_B_pressed();
-        break;
-    case Qt::Key_S:
+    else if (key == Qt::Key_S || key == 1067) // Клавиша S (код "Ы" - 1067)
         m_vench->on_BDown_B_pressed();
-        break;
-    case Qt::Key_D:
+    else if (key == Qt::Key_D || key == 1042) // Клавиша D (код "В" - 1042)
         m_vench->on_BRight_B_pressed();
-        break;
-    case Qt::Key_B:
-        m_vench->on_BBip_B_clicked();
-        break;
-    case Qt::Key_L:
-        m_vench->on_BLight_B_clicked();
-        break;
-    case Qt::Key_Space:
-        m_vench->on_BStop_B_clicked();
-        break;
-    case Qt::Key_R:
-        RecClicked();
-        break;
-    case Qt::Key_P:
-        PlayClicked();
-        break;
-    default:
+    else
         QWidget::keyPressEvent(event);
-    }
 }
 
 void BluetoothMode::keyReleaseEvent(QKeyEvent *event)
 {
     if (event->isAutoRepeat())
         return;
-    int key = event->key();
-    if (key == Qt::Key_W || key == Qt::Key_A || key == Qt::Key_S || key == Qt::Key_D)
-        m_vench->on_BStop_B_clicked();
 
+    int key = event->key();
+    if (key == Qt::Key_W || key == Qt::Key_A || key == Qt::Key_S || key == Qt::Key_D ||
+            key == 1062 || key == 1060 || key == 1067 || key == 1042)  // Код русской раскладки
+        m_vench->on_BStop_B_clicked();
 }
 
 void BluetoothMode::RuchnCommClicked()

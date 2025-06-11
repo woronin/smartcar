@@ -23,6 +23,22 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
+      <widget class="QLabel" name="label_logotip_b">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="../res.qrc">:/image/image/umki_logo_m.png</pixmap>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -415,7 +431,7 @@
             <string>Запись</string>
            </property>
            <property name="checkable">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -425,7 +441,7 @@
             <string>Поехали</string>
            </property>
            <property name="checkable">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -445,38 +461,6 @@
         </spacer>
        </item>
       </layout>
-     </item>
-     <item row="0" column="1" colspan="2">
-      <widget class="QLabel" name="label_20">
-       <property name="text">
-        <string>Не забудьте переключить раскладку клавиатуры в латинский алфавит (нижний регистр, CapsLock выключен)</string>
-       </property>
-       <property name="scaledContents">
-        <bool>false</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="5" colspan="2">
-      <widget class="QLabel" name="label_logotip_b">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap resource="../res.qrc">:/image/image/umki_logo_m.png</pixmap>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>
