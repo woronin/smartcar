@@ -11,6 +11,7 @@
 int main( int argc, char ** argv )
 {
     QApplication a( argc, argv );
+    a.setWindowIcon(QIcon(":/image/image/UMKI_logo.svg"));
     QString katalog;
     QString port_s;
 
