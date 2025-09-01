@@ -63,6 +63,7 @@ public:
     void BPressPlay();
     void BRec_pressed_n();
     void RuchnComm(QString text);
+    bool PortConnected();
 
 protected:
     QList <int> mass_comm_n;
@@ -74,6 +75,7 @@ protected:
     int flcomport;
     int com_port;
     bool fl_print_log;
+    bool portOpen;
     int ansStatus;
 
     QString f_name_xml;
@@ -121,6 +123,7 @@ public slots:
 
 signals:
     void playDone();
+    void informationMessage(QString title, QString text, QString buttonText);
 };
 
 #endif

@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <QtCore>
 #include <QColor>
+#include <QMessageBox>
 
 #ifdef LINUX_D
 #ifndef QSERIAL
@@ -23,6 +24,7 @@ Vench::Vench(QString kat, QString prt, QObject* parent) :
 {
     fl_kat = 0;
     fl_port_s = 0;
+    portOpen = false;
 
     mSleep(100);
 
@@ -72,15 +74,8 @@ void Vench::init()
     mass_comm_n.clear();
 
     qDebug("ustroistvo vvoda-vivoda:  %s\n", addr.toLocal8Bit().constData()); // smotrim kakoe ustroistvo otkrilos
-
-    if ((flcomport == 0) && (COMInit(addr.toLocal8Bit().constData()) != 1))
-    {
-        qDebug("Error open port Exit\n");
-        QString st = trUtf8("Ошибка инициализации порта: ") + addr;
-        /*!!!!
-         *QMessageBox::information( this, trUtf8("Ошибка"), st, trUtf8("Ok") );*/
-    }
-
+    if ((flcomport != 0) || (COMInit(addr.toLocal8Bit().constData()) == 1))
+        portOpen = true;
     if (flcomport != 0)
         ansStatus = 1;
     mSleep(3);
@@ -91,6 +86,18 @@ void Vench::init()
     channel_open(&channel_drone, PROTO_UDP, WRITE_MODE, PORT_DRONE, (char*)ADDR_SHIR, NULL, NULL, NULL, NULL);
 #endif
     mSleep(10);
+}
+
+bool Vench::PortConnected()
+{
+    if (!portOpen)
+    {
+        qDebug("Error open port Exit\n");
+        emit informationMessage(trUtf8("Ошибка"),
+                                trUtf8("Ошибка инициализации порта: ") + addr,
+                                trUtf8("Ok"));
+    }
+    return portOpen;
 }
 
 void Vench::mSleep(int duration)
@@ -645,11 +652,10 @@ void Vench::RuchnComm(QString text)
 
     Write(com_port, buf);
 
-    /*!!!!
-     *QMessageBox::information( this,
-                              trUtf8("Информация"),
-                              trUtf8("Команда отправлена на выполнение\n"),
-                              trUtf8("Ok") );*/
+    emit informationMessage(trUtf8("Информация"),
+                            trUtf8("Команда отправлена на выполнение\n"),
+                            trUtf8("Ok"));
+
 #ifdef PRINT_DEBUG
     qDebug("Send comm Ruchn vvod\n");
 #endif
