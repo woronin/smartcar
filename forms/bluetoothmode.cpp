@@ -1,10 +1,6 @@
 #include "bluetoothmode.h"
 #include "ui_bluetoothmode.h"
 
-#include <QFileInfo>
-#include <QDesktopServices>
-#include <QCoreApplication>
-#include <QUrl>
 #include <QKeyEvent>
 #include <QShortcut>
 
@@ -27,10 +23,7 @@ BluetoothMode::BluetoothMode(Vench *vench, QWidget *parent) :
     (new QShortcut(QKeySequence(Qt::Key_Space), this, [this](){ m_vench->on_BStop_B_clicked(); }))->setAutoRepeat(false);
     (new QShortcut(QKeySequence(Qt::Key_R), this, SLOT(RecClicked())))->setAutoRepeat(false);
     (new QShortcut(QKeySequence(Qt::Key_P), this, SLOT(PlayClicked())))->setAutoRepeat(false);
-    (new QShortcut(QKeySequence(Qt::Key_H), this, SLOT(OpenGuidDoc())))->setAutoRepeat(false);
     //--------------------------------------------//
-
-    connect(ui->BHelp, &QPushButton::clicked, this, &BluetoothMode::OpenGuidDoc);
 
     connect(ui->BBell,  &QPushButton::clicked, m_vench, &Vench::on_BBip_B_clicked);
     connect(ui->BLight, &QPushButton::clicked, m_vench, &Vench::on_BLight_B_clicked);
@@ -126,15 +119,6 @@ void BluetoothMode::SetLStatus()
 {
     ui->LStatus->setText(m_vench->AnsStatus());
     ui->LStatus->setStyleSheet("background: " + m_vench->AnsStatusColor().name());
-}
-
-void BluetoothMode::OpenGuidDoc()
-{
-    QString helpFilePath = QCoreApplication::applicationDirPath() + "/umkiguide.pdf";
-    if (QFileInfo(helpFilePath).exists())
-        QDesktopServices::openUrl(QUrl(helpFilePath, QUrl::TolerantMode));
-    else
-        QDesktopServices::openUrl(QUrl("https://www.umkikit.ru/prog/umkiguide.pdf"));
 }
 
 BluetoothMode::~BluetoothMode()

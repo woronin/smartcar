@@ -24,7 +24,6 @@ protected slots:
     void RuchnCommClicked();
     void RecClicked();
     void PlayClicked();
-    void OpenGuidDoc();
     void SetLStatus();
 
 private:

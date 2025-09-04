@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>882</width>
-    <height>623</height>
+    <width>282</width>
+    <height>291</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,12 +25,30 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>882</width>
+     <width>282</width>
      <height>30</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Помощь</string>
+    </property>
+    <addaction name="actionGuide"/>
+    <addaction name="actionReference"/>
+   </widget>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionGuide">
+   <property name="text">
+    <string>Руководство</string>
+   </property>
+  </action>
+  <action name="actionReference">
+   <property name="text">
+    <string>Справка</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../res.qrc"/>
