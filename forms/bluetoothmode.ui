@@ -93,6 +93,10 @@
          </item>
          <item row="5" column="2">
           <widget class="QPushButton" name="BPlay">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(195, 195, 195);
+selection-background-color: rgb(255, 255, 255);</string>
+           </property>
            <property name="text">
             <string>Поехали</string>
            </property>
@@ -136,6 +140,10 @@
                 <height>100</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(195, 195, 195);
+selection-background-color: rgb(255, 255, 255);</string>
+              </property>
               <property name="text">
                <string>Вперед (w)</string>
               </property>
@@ -154,6 +162,10 @@
                 <width>100</width>
                 <height>100</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(195, 195, 195);
+selection-background-color: rgb(255, 255, 255);</string>
               </property>
               <property name="text">
                <string>Вправо (d)</string>
@@ -174,6 +186,10 @@
                 <height>100</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(195, 195, 195);
+selection-background-color: rgb(255, 255, 255);</string>
+              </property>
               <property name="text">
                <string>Назад (s)</string>
               </property>
@@ -192,6 +208,10 @@
                 <width>100</width>
                 <height>100</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(195, 195, 195);
+selection-background-color: rgb(255, 255, 255);</string>
               </property>
               <property name="text">
                <string>Стоп (Пробел)</string>
@@ -212,6 +232,10 @@
                 <height>100</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(195, 195, 195);
+selection-background-color: rgb(255, 255, 255);</string>
+              </property>
               <property name="text">
                <string>Влево (a)</string>
               </property>
@@ -225,10 +249,17 @@
            <property name="enabled">
             <bool>true</bool>
            </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(195, 195, 195);
+selection-background-color: rgb(255, 255, 255);</string>
+           </property>
            <property name="text">
             <string>Запись</string>
            </property>
            <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <property name="checked">
             <bool>false</bool>
            </property>
           </widget>
@@ -240,6 +271,10 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(195, 195, 195);
+selection-background-color: rgb(255, 255, 255);</string>
            </property>
            <property name="text">
             <string>Свет</string>
@@ -266,6 +301,10 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(195, 195, 195);
+selection-background-color: rgb(255, 255, 255);</string>
            </property>
            <property name="text">
             <string>Сигнал (Бип)</string>
@@ -329,6 +368,10 @@
        </item>
        <item>
         <widget class="QPushButton" name="BRuchnComm">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(195, 195, 195);
+selection-background-color: rgb(255, 255, 255);</string>
+         </property>
          <property name="text">
           <string>Выполнить команду</string>
          </property>

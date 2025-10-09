@@ -87,7 +87,7 @@ void BluetoothMode::RecClicked()
 {
     if (fl_rec)
     {
-        ui->BRec->setStyleSheet("");
+        ui->BRec->setStyleSheet(defaultButtonStyle);
         ui->BRec->setText("Запись");
     }
     else
@@ -103,7 +103,7 @@ void BluetoothMode::PlayClicked()
 {
     if (fl_play)
     {
-        ui->BPlay->setStyleSheet("");
+        ui->BPlay->setStyleSheet(defaultButtonStyle);
         ui->BPlay->setText("Поехали");
     }
     else

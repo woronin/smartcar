@@ -31,6 +31,8 @@ private:
     Vench *m_vench;
     bool fl_rec;
     bool fl_play;
+
+    const QString defaultButtonStyle = "background-color: rgb(195, 195, 195);\nselection-background-color: rgb(255, 255, 255);";
 };
 
 #endif // BLUETOOTHMODE_H
